@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "components": [
+    {
+      "id": "g20_seat_test",
+      "version": "0.1.0",
+      "title": "Seat Test (G20 experimental)",
+      "description": "Experimental seat status and one-shot passenger fore/aft test for iDrive 7.",
+      "mguHmi": [
+        "ID7"
+      ],
+      "requires": {
+        "iteriodev-comfort": "0.5.1",
+        "mgu-deploy": "0.7.11"
+      },
+      "kind": "app",
+      "path": "g20-seat-test",
+      "uninstallable": true,
+      "build": {
+        "python": "g20-seat-test/tools/build.py",
+        "output": "g20-seat-test/dist/USB/mgu-repo/g20-seat-test/g20_seat_test@0.1.0.tgz"
+      }
+    }
+  ]
+}

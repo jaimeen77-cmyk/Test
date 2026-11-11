@@ -1,0 +1,5 @@
+**/__pycache__/
+*.pyc
+g20-seat-test/dist/
+seat-test.log*
+seat-test-report.json

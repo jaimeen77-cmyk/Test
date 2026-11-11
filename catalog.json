@@ -1,0 +1,26 @@
+{
+  "schema": 2,
+  "components": [
+    {
+      "id": "g20_seat_test",
+      "kind": "app",
+      "version": "0.1.0",
+      "title": "Seat Test (G20 experimental)",
+      "description": "Read-only startup; optional one-shot passenger fore/aft test.",
+      "mguHmi": [
+        "ID7"
+      ],
+      "uninstallable": true,
+      "requires": {
+        "iteriodev-comfort": "0.5.1",
+        "mgu-deploy": "0.7.11"
+      },
+      "artifact": {
+        "name": "g20_seat_test@0.1.0.tgz",
+        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/downloads/g20_seat_test@0.1.0.tgz",
+        "size": 14290,
+        "sha256": "01b58e4dcfc0ef89a703f55bdb42a582313d7989ac0c0920cf4ed825d6636697"
+      }
+    }
+  ]
+}
