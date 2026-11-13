@@ -28,8 +28,8 @@ class IgnitionM1 {
             if (offSeen) this.settings.set('m1OffSeen', false);
             if (this.enabled() && offSeen) {
                 const now = this.now();
-                this.pending = { due: now + 5000, deadline: now + 30000, idleAt: null, waiting: false };
-                this.log.add(['M1 power-on detected: waiting 5 seconds']);
+                this.pending = { due: now + 15000, deadline: now + 45000, idleAt: null, waiting: false };
+                this.log.add(['M1 power-on detected: waiting 15 seconds']);
             }
         }
         this.lastPower = s.carOn;
@@ -50,7 +50,7 @@ class IgnitionM1 {
             if (this.pending !== p || !this.enabled()) return;
             if (!s.carOn || !s.parked) return this.cancel('M1 cancelled: power or stationary condition changed');
             if (this.now() > p.deadline) return this.cancel('M1 cancelled: readiness timeout');
-            if (s.seats.job || s.seats.moving || p.idleAt === null || this.now() - p.idleAt < 1000) {
+            if (s.seats.job || s.seats.moving || p.idleAt === null || this.now() - p.idleAt < 3000) {
                 if (!p.waiting) { p.waiting = true; this.log.add(['M1 waiting for Comfort seat job to finish']); }
                 return;
             }

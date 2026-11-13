@@ -26,7 +26,8 @@ function fixture(values) {
     let f = fixture();
     f.emit({}); await f.advance(6000);
     assert.equal(f.client.sent.length, 0, 'starting an already-on car is not a trigger');
-    f.cycle(); await f.advance(4999); assert.equal(f.client.sent.length, 0);
+    f.cycle(); await f.advance(5000); assert.equal(f.client.sent.length, 0, 'old five-second trigger must not fire');
+    await f.advance(9999); assert.equal(f.client.sent.length, 0);
     await f.advance(1);
     assert.deepStrictEqual(f.client.sent, [{ op: 'memory', seat: 'driver', slot: 0, save: false }]);
     await f.advance(10000); f.emit({}); await f.advance(1000);
@@ -40,9 +41,9 @@ function fixture(values) {
     assert.equal(f.client.sent.length, 0, 'turning the option off cancels waiting');
 
     f = fixture(); f.cycle(); f.client.state.seats.job = 'back';
-    await f.advance(6000); assert.equal(f.client.sent.length, 0, 'never interrupt Comfort');
+    await f.advance(16000); assert.equal(f.client.sent.length, 0, 'never interrupt Comfort');
     f.client.state.seats.job = null; f.emit({});
-    await f.advance(999); assert.equal(f.client.sent.length, 0);
+    await f.advance(2999); assert.equal(f.client.sent.length, 0);
     await f.advance(1); assert.equal(f.client.sent.length, 1, 'wait for stable idle after Comfort finishes');
 
     for (const reason of ['driving', 'off', 'lost', 'manual', 'no memory', 'no position', 'timeout']) {
@@ -53,26 +54,26 @@ function fixture(values) {
         if (reason === 'manual') f.auto.cancel('manual');
         if (reason === 'no memory') f.client.state.seats.memory1.driver = false;
         if (reason === 'no position') f.client.state.seats.pos.driver = {};
-        await f.advance(reason === 'timeout' ? 30001 : 6000);
+        await f.advance(reason === 'timeout' ? 45001 : 16000);
         assert.equal(f.client.sent.length, 0, reason + ' must prevent recall');
     }
-    f = fixture({ m1OffSeen: true }); f.emit({}); await f.advance(5000);
+    f = fixture({ m1OffSeen: true }); f.emit({}); await f.advance(15000);
     assert.equal(f.client.sent.length, 1, 'an observed off state survives a process restart');
     assert.equal(f.settings.get('m1OffSeen'), false);
 
-    f = fixture(); const moves = ownMoves(f.client); f.cycle(); await f.advance(5000);
+    f = fixture(); const moves = ownMoves(f.client); f.cycle(); await f.advance(15000);
     f.client.state.seats.job = 'memory'; f.client.emit('state', f.client.state);
     await moves.stop();
     assert.equal(f.client.sent.length, 1, 'screen-hide tracking does not stop automatic M1');
 
     f = fixture(); f.client.refresh = async () => { throw new Error('offline'); };
-    f.cycle(); await f.advance(5000); await f.advance(1000);
+    f.cycle(); await f.advance(15000); await f.advance(1000);
     assert.equal(f.client.sent.length, 0); assert.equal(f.auto.pending, null);
 
     f = fixture(); f.cycle();
     let release;
     f.client.refresh = () => new Promise((resolve) => { release = resolve; });
-    const checking = f.advance(5000);
+    const checking = f.advance(15000);
     f.auto.cancel('manual'); release(f.client.state); await checking;
     assert.equal(f.client.sent.length, 0, 'manual cancellation wins during status read');
 
@@ -94,7 +95,7 @@ function fixture(values) {
     try {
         await new Promise((resolve) => setImmediate(resolve));
         f.emit({ carOn: false }); f.emit({ carOn: true });
-        clock += 5000; await runtime.poll();
+        clock += 15000; await runtime.poll();
         assert.equal(f.client.sent.length, 1, 'background recall needs no open screen');
     } finally { runtime.close(); }
     console.log('PASS ignition M1: delayed one-shot, idle/parked/memory guards, cancellation, restart and screen-hide ownership');

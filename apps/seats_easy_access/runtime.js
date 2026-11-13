@@ -5,6 +5,7 @@ const { ComfortClient } = require('./core');
 const { DemoClient } = require('./demo');
 const { ComfortLog } = require('./comfort-log');
 const { IgnitionM1 } = require('./ignition-m1');
+const { RecallTrace } = require('./recall-trace');
 function start(ctx, options) {
     const o = options || {};
     const demo = o.demo === undefined ? !fs.existsSync('/etc/oap/someip/someip-interfaces.json') : o.demo;
@@ -12,12 +13,13 @@ function start(ctx, options) {
     const settings = ctx.settings || { get() { return false; }, set() {} };
     const log = new ComfortLog(client, { journal: !demo, size: 120,
         file: !demo && ctx.dataDir ? path.join(ctx.dataDir, 'seats-diagnostics.json') : null });
+    const trace = new RecallTrace(client, log, { now: o.now });
     const auto = new IgnitionM1(client, settings, log, { now: o.now });
     let closed = false, reading = false;
     async function poll() {
         if (closed || reading) return;
         reading = true;
-        try { await client.refresh(); await auto.tick(); }
+        try { await client.refresh(); if (!closed) await auto.tick(); }
         catch (_) {} // lost/status failures are recorded without restarting or moving a seat
         finally { reading = false; }
     }

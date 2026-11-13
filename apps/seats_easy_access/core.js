@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.6.5';
+const VERSION = '0.6.6';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -24,6 +24,7 @@ function stateOf(message) {
         settings: { easyExit: !!(state.settings && state.settings.easyExit) },
         seats: {
             axes: { driver: [], passenger: [] }, pos: { driver: {}, passenger: {} },
+            m1Target: { driver: {}, passenger: {} },
             exit: { driver: !!(seats.exit && seats.exit.driver), passenger: !!(seats.exit && seats.exit.passenger) },
             pre: { driver: !!(seats.pre && seats.pre.driver), passenger: !!(seats.pre && seats.pre.passenger) },
             moving: seats.moving && typeof seats.moving === 'object' ? {
@@ -44,6 +45,8 @@ function stateOf(message) {
         clean.seats.axes[who].forEach((axis) => {
             const value = seats.pos[who] && seats.pos[who][axis];
             if (typeof value === 'number' && isFinite(value)) clean.seats.pos[who][axis] = value;
+            const target = seats.memories && seats.memories[who] && seats.memories[who][0];
+            if (target && typeof target[axis] === 'number' && isFinite(target[axis])) clean.seats.m1Target[who][axis] = target[axis];
         });
     });
     return clean;
