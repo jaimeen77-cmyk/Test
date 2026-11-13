@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.5.0';
+const VERSION = '0.6.0';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {

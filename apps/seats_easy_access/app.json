@@ -1,6 +1,6 @@
 {
   "id": "seats_easy_access",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "title": "Seats Easy Access",
   "description": "Seat controls, memories, Easy Access and passenger Make room",
   "vendor": "custom",
@@ -20,158 +20,69 @@
   "screens": [
     {
       "name": "MAIN",
-      "kind": "list",
+      "kind": "canvas",
       "title": "Seats Easy Access",
-      "tabs": [
+      "graphic": "MAIN_GFX",
+      "buttons": [
         [
-          "SELECT_DRIVER",
+          "BTN_DRIVER",
           "Driver"
         ],
         [
-          "SELECT_PASSENGER",
-          "Passenger"
-        ]
-      ],
-      "items": [
-        [
-          "graphic",
-          "SEAT_GFX",
-          "seat-control.png"
-        ],
-        [
-          "text3",
-          "STATUS",
-          "Refresh Comfort status first."
-        ],
-        [
-          "twocol",
-          "SELECTED",
-          "Selected seat"
-        ],
-        [
-          "twocol",
-          "AUTO",
-          "Automatic Easy Access"
-        ],
-        [
-          "twocol",
-          "DRIVER",
-          "Driver"
-        ],
-        [
-          "twocol",
-          "PASSENGER",
+          "BTN_PASSENGER",
           "Passenger"
         ],
         [
-          "twocol",
-          "VEHICLE",
-          "Vehicle status"
+          "BTN_AXIS",
+          "Adjustment"
         ],
         [
-          "button",
-          "REFRESH",
-          "Refresh status"
+          "BTN_MINUS",
+          "−"
         ],
         [
-          "button",
-          "AUTO_TOGGLE",
-          "Toggle automatic Easy Access"
+          "BTN_PLUS",
+          "+"
         ],
         [
-          "button",
-          "SLV_MINUS",
-          "◀"
-        ],
-        [
-          "button",
-          "SLV_PLUS",
-          "▶"
-        ],
-        [
-          "button",
-          "SHV_MINUS",
-          "Height ▼"
-        ],
-        [
-          "button",
-          "SHV_PLUS",
-          "Height ▲"
-        ],
-        [
-          "button",
-          "LNV_MINUS",
-          "Backrest ◀"
-        ],
-        [
-          "button",
-          "LNV_PLUS",
-          "Backrest ▶"
-        ],
-        [
-          "button",
-          "SNV_MINUS",
-          "Cushion ▼"
-        ],
-        [
-          "button",
-          "SNV_PLUS",
-          "Cushion ▲"
-        ],
-        [
-          "button",
-          "KHV_MINUS",
-          "Headrest ▼"
-        ],
-        [
-          "button",
-          "KHV_PLUS",
-          "Headrest ▲"
-        ],
-        [
-          "button",
-          "MEMORY_SAVE",
+          "BTN_SAVE",
           "Save memory"
         ],
         [
-          "button",
-          "M1",
+          "BTN_M1",
           "M1"
         ],
         [
-          "button",
-          "M2",
+          "BTN_M2",
           "M2"
         ],
         [
-          "button",
-          "M3",
+          "BTN_M3",
           "M3"
         ],
         [
-          "button",
-          "EXIT_SAVE",
-          "Save current exit position"
+          "BTN_EXIT_SAVE",
+          "Save exit"
         ],
         [
-          "button",
-          "EXIT_MOVE",
-          "Move to exit position"
+          "BTN_EXIT",
+          "Easy Access"
         ],
         [
-          "button",
-          "MAKE_ROOM",
-          "Make room · Move passenger seat forward"
+          "BTN_ROOM",
+          "Make room"
         ],
         [
-          "button",
-          "STOP",
-          "Stop seat movement"
+          "BTN_REFRESH",
+          "Refresh"
         ],
         [
-          "text3",
-          "GUIDE",
-          "Save and test while stationary. Keep the path clear and the physical seat switch within reach."
+          "BTN_AUTO",
+          "Automatic Easy Access"
+        ],
+        [
+          "BTN_STOP",
+          "STOP"
         ]
       ]
     }
@@ -205,7 +116,19 @@
       "Move to exit position": "하차 위치로 이동",
       "Make room · Move passenger seat forward": "Make room · 조수석 공간 확보",
       "Stop seat movement": "시트 이동 정지",
-      "Save and test while stationary. Keep the path clear and the physical seat switch within reach.": "저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요."
+      "Save and test while stationary. Keep the path clear and the physical seat switch within reach.": "저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요.",
+      "Fore / aft": "전후",
+      "Height": "높이",
+      "Backrest": "등받이",
+      "Cushion": "쿠션",
+      "Headrest": "헤드레스트",
+      "Save exit": "하차 위치 저장",
+      "Return passenger": "조수석 원위치",
+      "Make room": "공간 확보",
+      "Refresh": "새로 확인",
+      "PREVIEW": "미리보기",
+      "STOP": "정지",
+      "Adjustment": "조절 축"
     }
   }
 }

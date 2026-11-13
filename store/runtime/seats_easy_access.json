@@ -2,10 +2,10 @@
   "schema": 1,
   "id": "seats_easy_access",
   "language": "ko",
-  "source_version": "0.5.0",
-  "ui_sha256": "97b8831ea63a5b5c187f59bbbf02fc55aa688f93f49843f40827eb2ab87e7953",
-  "size": 1684252,
-  "sha256": "21aedb3a7dc0db379deba63e7e76fa4b660cc3e3de1a8c21cbe2a4385369cea8",
+  "source_version": "0.6.0",
+  "ui_sha256": "8e5509644c221854ff2c1ab3d79ba7fd62e54cd5a154dd08538ee760920d5b6d",
+  "size": 1799105,
+  "sha256": "16b4bcfe4ee3c73f4733566afdc29befe53fa69bfcf40e5ea8e09dfa2d546073",
   "parts": [
     "seats_easy_access.tgz.part-00",
     "seats_easy_access.tgz.part-01",
@@ -15,6 +15,7 @@
     "seats_easy_access.tgz.part-05",
     "seats_easy_access.tgz.part-06",
     "seats_easy_access.tgz.part-07",
-    "seats_easy_access.tgz.part-08"
+    "seats_easy_access.tgz.part-08",
+    "seats_easy_access.tgz.part-09"
   ]
 }

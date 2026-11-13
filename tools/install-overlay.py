@@ -86,8 +86,14 @@ def main():
                          if line and not line.startswith('#') and '\t' in line)
         for app in selected:
             # Apps can keep Korean additions beside their normal English source spec.
-            additions.update(json.loads((HERE / 'apps' / app / 'app.json').read_text(encoding='utf-8'))
-                             .get('translations', {}).get('ko', {}))
+            translated = json.loads((HERE / 'apps' / app / 'app.json').read_text(encoding='utf-8')).get('translations', {}).get('ko', {})
+            if app == 'seats_easy_access':
+                existing = json.loads(ko.read_text(encoding='utf-8'))
+                for key, value in translated.items():
+                    if key not in existing:
+                        additions.setdefault(key, value)
+            else:
+                additions.update(translated)
         words = json.loads(ko.read_text(encoding='utf-8'))
         words.update(additions)
         tsv = target / 'kit/runtime/locales/ko.tsv'

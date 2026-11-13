@@ -2,7 +2,7 @@
 
 2020 BMW G20과 iDrive 7에서 시험하기 위한 시트 앱 저장소입니다. BMW SDK·펌웨어나 IterioDev Comfort 바이너리는 포함하지 않습니다.
 
-## Seats Easy Access 0.5.0
+## Seats Easy Access 0.6.0
 
 기본 언어는 **영어**입니다. `--language ko`를 지정하면 한국어판을 빌드합니다. MGU Store도 English/한국어 항목을 별도로 제공합니다. 기존 기본 ID 업데이트는 영어판으로 전환되므로 한국어를 원하면 한국어 항목을 선택하세요.
 
@@ -21,8 +21,10 @@
 
 [한국어 설치·사용 안내](apps/seats_easy_access/README.ko.md) · [English guide](apps/seats_easy_access/README.md)
 
-- [영어 USB 설치](downloads/seats-easy-access-0.5.0-usb.zip) · [영어 OAP](downloads/seats_easy_access@0.5.0.tgz)
-- [한국어 USB 설치](downloads/seats-easy-access-ko-0.5.0-usb.zip) · [한국어 OAP](downloads/seats_easy_access_ko@0.5.0.tgz)
+- [영어 USB 설치](downloads/seats-easy-access-0.6.0-usb.zip) · [영어 OAP](downloads/seats_easy_access@0.6.0.tgz)
+- [한국어 USB 설치](downloads/seats-easy-access-ko-0.6.0-usb.zip) · [한국어 OAP](downloads/seats_easy_access_ko@0.6.0.tgz)
+
+0.6.0에서는 실제 그래픽 캔버스를 사용합니다. 대상 프로젝트에서 `node kit/tools/emu.js seats_easy_access`로 확인할 수 있고, PC의 PREVIEW 모드는 차량 소켓에 연결하지 않습니다.
 
 ## MGU Store 설치
 

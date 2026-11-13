@@ -28,7 +28,7 @@ def navigation_fonts_source(text):
 def shared_app_source(text):
     """Generic app.json features, using the existing upstream build and archives."""
     if '# Jam shared app resources v1' in text:
-        return text
+        return app_locale_source(text)
     text = replace_once(text, "    spec = localize_spec(spec, language)",
         "    if spec.get('supportedLanguages') and language not in spec['supportedLanguages']:\n"
         "        raise SystemExit(app_id + ': supported languages: ' + ', '.join(spec['supportedLanguages']))\n"
@@ -55,7 +55,23 @@ def shared_app_source(text):
     # Installed RHMI resources must contain the same static images as the OAP tree.
     anchor = "    shutil.copy(os.path.join(pr, 'variantGroups', 'Common', 'images', icon), os.path.join(ir, 'resources', icon))"
     text = replace_once(text, anchor, anchor + "\n    for relative in spec.get('staticImages', []):\n        name = os.path.basename(relative)\n        shutil.copy(os.path.join(image_dir, name), os.path.join(ir, 'resources', name))")
-    return text
+    return app_locale_source(text)
+
+
+def app_locale_source(text):
+    if '# Jam per-app runtime translations v1' in text:
+        return text
+    anchor = "    locale = {'language': language, 'strings': load_locale(language)}"
+    return replace_once(text, anchor, anchor + "\n    # Jam per-app runtime translations v1: do not alter another app's shared catalog.\n    locale['strings'] = dict(locale['strings'])\n    locale['strings'].update(spec.get('translations', {}).get(language, {}))")
+
+
+def localize_source(text):
+    if '# Jam per-app spec translations v1' in text:
+        return text
+    anchor = "    words = load_locale(language)\n    s = copy.deepcopy(spec)"
+    addition = "    # Jam per-app spec translations v1\n    words = dict(load_locale(language))\n    words.update(spec.get('translations', {}).get(language, {}))\n    s = copy.deepcopy(spec)"
+    text = replace_once(text, anchor, addition)
+    return replace_once(text, "        for button in screen.get('buttons', []):", "        for button in screen.get('buttons', []) + screen.get('tabs', []):")
 
 
 def build_source(text):
@@ -418,4 +434,10 @@ def plan_upstream(target):
         revised = transform(original)
         if revised != original:
             changes[path] = revised
+    locale = target / 'kit/tools/localize.py'
+    if locale.is_file():
+        original = locale.read_text(encoding='utf-8')
+        revised = localize_source(original)
+        if revised != original:
+            changes[locale] = revised
     return changes

@@ -4,7 +4,7 @@
     {
       "id": "seats_easy_access",
       "kind": "app",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "title": "Seats Easy Access (English)",
       "description": "Seat controls, memories, Easy Access and passenger Make room",
       "mguHmi": [
@@ -16,16 +16,16 @@
       },
       "uninstallable": true,
       "artifact": {
-        "name": "seats_easy_access@0.5.0.tgz",
-        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/downloads/seats_easy_access@0.5.0.tgz",
-        "size": 1500858,
-        "sha256": "04579ea1770440f4a11bb40af84e415b1228a968821f8c9b39edb841a02742e6"
+        "name": "seats_easy_access@0.6.0.tgz",
+        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/downloads/seats_easy_access@0.6.0.tgz",
+        "size": 1892146,
+        "sha256": "fdea2288e3059df814c65effe89f3c6915b5338d4b476170abe689940dea8594"
       }
     },
     {
       "id": "seats_easy_access_ko",
       "kind": "app",
-      "version": "0.5.0",
+      "version": "0.6.0",
       "title": "시트 Easy Access (한국어)",
       "description": "시트 조절·메모리·승하차 편의·조수석 공간 확보",
       "mguHmi": [
@@ -37,10 +37,10 @@
       },
       "uninstallable": true,
       "artifact": {
-        "name": "seats_easy_access_ko@0.5.0.tgz",
-        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/downloads/seats_easy_access_ko@0.5.0.tgz",
-        "size": 1696047,
-        "sha256": "a619172e2e08e502f67a6cf556adbbf4e259b4c69f665e710c97b6b7a9b0af13"
+        "name": "seats_easy_access_ko@0.6.0.tgz",
+        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/downloads/seats_easy_access_ko@0.6.0.tgz",
+        "size": 2088220,
+        "sha256": "c1a7d1704228b64381cd4f5e25f14a329a5f7b7b52e68def5915f815998c17fb"
       }
     }
   ]

@@ -11,6 +11,7 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
+VERSION = json.loads((ROOT / 'apps/seats_easy_access/app.json').read_text(encoding='utf-8'))['version']
 parser = argparse.ArgumentParser()
 parser.add_argument('upstream', type=Path)
 parser.add_argument('--prepare-store', action='store_true')
@@ -57,9 +58,15 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
     assert (images / 'seat-control.png').is_file()
     ui = json.loads((preview / 'rhmiData/uiDescriptions/ID7/uiDescription.json').read_text(encoding='utf-8'))
     names = {c['name'] for s in ui['containers'].values() for c in s['components'].values()}
-    assert {'SELECT_DRIVER', 'SELECT_PASSENGER', 'MAKE_ROOM', 'M1', 'M2', 'M3', 'STOP'} <= names
+    assert {'MAIN_GFX', 'BTN_DRIVER', 'BTN_PASSENGER', 'BTN_ROOM', 'BTN_M1', 'BTN_M2', 'BTN_M3', 'BTN_STOP'} <= names
     ko_strings = json.loads((preview / 'rhmiData/variantGroups/Common/texts/en_GB.json').read_text(encoding='utf-8'))
     assert ko_strings['SID_SEATS_EASY_ACCESS_TITLE'] == '시트 Easy Access'
+    run(ROOT, 'node', str(ROOT / 'tests/seats-screen.test.js'), str(project / 'dist/seats_easy_access'))
+    # This executes the same mgu.run/hu-stub path as emu.js, not a handcrafted mock UI.
+    frames = project / 'preview/seats'
+    run(project, 'node', 'kit/tools/preview.js', str(project / 'dist/seats_easy_access'), str(frames),
+        'BTN_PASSENGER', 'BTN_ROOM', 'render')
+    assert len(list(frames.glob('main_gfx-*.png'))) >= 3, 'the real app must draw visible frames'
     # Only package assembly is tested with this nonfunctional, clearly marked SDK.
     sdk = project / 'oap-sdk'
     sdk.mkdir()
@@ -71,7 +78,7 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
     kits = project / 'dist/mgu-custom-apps-ko'
     packages = list((kits / 'apps').glob('*.mgu'))
     assert len(packages) == len(selected)
-    seat = next(p for p in packages if p.name.startswith('seats_easy_access@0.5.0-ko.'))
+    seat = next(p for p in packages if p.name.startswith('seats_easy_access@' + VERSION + '-ko.'))
     with tarfile.open(seat) as archive:
         meta = json.load(archive.extractfile('meta.json'))
         pkg = json.load(archive.extractfile('source/package.json'))
@@ -88,7 +95,7 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
     english_boot = boot.replace(repr(['kit/tools/make_kit.py'] + selected + ['--language', 'ko']),
                                 repr(['kit/tools/make_kit.py', 'seats_easy_access']))
     run(project, sys.executable, '-c', english_boot)
-    english_package = project / 'dist/mgu-custom-apps/apps/seats_easy_access@0.5.0.mgu'
+    english_package = project / ('dist/mgu-custom-apps/apps/seats_easy_access@' + VERSION + '.mgu')
     with tarfile.open(english_package) as archive:
         assert json.load(archive.extractfile('source/javascript/kit/locale.json'))['language'] == 'en'
         assert 'source/javascript/i18n.js' in archive.getnames()
@@ -103,8 +110,8 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
             run(ROOT, sys.executable, 'tools/prepare-store.py', '--dist', str(project / 'dist'), '--language', language, '--apps', 'seats_easy_access')
             out = project / ('store-output-' + language)
             out.mkdir()
-            run(ROOT, 'node', 'tools/store-build.js', '--template', 'seats_easy_access', '--id', 'seats_easy_access', '--version', '0.5.0', '--dir', 'apps/seats_easy_access', '--language', language, '--out', str(out))
-            with tarfile.open(out / 'seats_easy_access@0.5.0.tgz') as archive:
+            run(ROOT, 'node', 'tools/store-build.js', '--template', 'seats_easy_access', '--id', 'seats_easy_access', '--version', VERSION, '--dir', 'apps/seats_easy_access', '--language', language, '--out', str(out))
+            with tarfile.open(out / ('seats_easy_access@' + VERSION + '.tgz')) as archive:
                 assert not any('node_modules' in name for name in archive.getnames())
                 assert 'package/javascript/core.js' in archive.getnames()
                 assert 'package/javascript/i18n.js' in archive.getnames()

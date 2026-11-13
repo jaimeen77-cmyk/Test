@@ -1,4 +1,6 @@
-# Seats Easy Access 0.5.0
+# Seats Easy Access 0.6.0
+
+공용 캔버스 기반으로 실제 시트 이미지·원형 조절 버튼·운전석/조수석 탭을 표시합니다. 대상 프로젝트에서 `node kit/tools/emu.js seats_easy_access`로 실행하세요. PC에서는 미리보기 표시와 모의 상태를 사용하며 차량 소켓에 연결하지 않습니다.
 
 기본 언어는 영어입니다. 공용 빌드에서 `--language ko`를 지정하면 메뉴·상태·오류 안내를 한국어로 표시합니다. Store에서도 English/한국어 항목을 따로 선택할 수 있습니다.
 
