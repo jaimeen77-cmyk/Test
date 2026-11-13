@@ -43,17 +43,29 @@ async function run(options) {
     function draw() {
         const state = easy.state();
         const moving = state && (state.seats.moving || state.seats.job);
+        const who = easy.selectedSeat;
+        const axes = state ? state.seats.axes[who] : [];
         text('STATUS', easy.message);
+        text('SELECTED', who === 'driver' ? '운전석' : '조수석', 'Text2ndCol');
         text('AUTO', state ? (state.settings.easyExit ? '켜짐' : '꺼짐') : '확인 필요', 'Text2ndCol');
         text('DRIVER', seatText('driver'), 'Text2ndCol');
         text('PASSENGER', seatText('passenger'), 'Text2ndCol');
         text('VEHICLE', state ? (state.parked ? '정차' : '주행 중') + (moving ? ' · 시트 이동 중' : '') : '알 수 없음', 'Text2ndCol');
         const ready = easy.foreground && !!state && !easy.pending;
+        enable('REFRESH', easy.foreground && !easy.pending);
+        enable('SELECT_DRIVER', ready && who !== 'driver');
+        enable('SELECT_PASSENGER', ready && who !== 'passenger');
         enable('AUTO_TOGGLE', ready);
-        enable('DRIVER_SAVE', ready && !easy.actionReady('driver', true));
-        enable('DRIVER_MOVE', ready && state.seats.exit.driver && !easy.actionReady('driver', true));
-        enable('PASSENGER_SAVE', ready && !easy.actionReady('passenger', true));
-        enable('PASSENGER_MOVE', ready && state.seats.exit.passenger && !easy.actionReady('passenger', true));
+        ['SLV_MINUS', 'SLV_PLUS', 'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS',
+            'SNV_MINUS', 'SNV_PLUS', 'KHV_MINUS', 'KHV_PLUS'].forEach((name) => {
+            enable(name, ready && axes.indexOf(name.slice(0, 3)) >= 0 && !easy.actionReady(who, false));
+        });
+        enable('MEMORY_SAVE', ready && !easy.actionReady(who, true));
+        enable('M1', ready && !easy.actionReady(who, true));
+        enable('M2', ready && !easy.actionReady(who, true));
+        enable('M3', ready && !easy.actionReady(who, true));
+        enable('EXIT_SAVE', ready && !easy.actionReady(who, true));
+        enable('EXIT_MOVE', ready && state.seats.exit[who] && !easy.actionReady(who, true));
         enable('STOP', easy.foreground && !!state);
     }
     function action(name, handler) {
@@ -64,10 +76,17 @@ async function run(options) {
     }
     action('REFRESH', () => easy.refresh());
     action('AUTO_TOGGLE', () => easy.toggle());
-    action('DRIVER_SAVE', () => easy.save('driver'));
-    action('DRIVER_MOVE', () => easy.move('driver'));
-    action('PASSENGER_SAVE', () => easy.save('passenger'));
-    action('PASSENGER_MOVE', () => easy.move('passenger'));
+    action('SELECT_DRIVER', () => easy.selectSeat('driver'));
+    action('SELECT_PASSENGER', () => easy.selectSeat('passenger'));
+    action('SLV_MINUS', () => easy.jog('SLV', -1)); action('SLV_PLUS', () => easy.jog('SLV', 1));
+    action('SHV_MINUS', () => easy.jog('SHV', -1)); action('SHV_PLUS', () => easy.jog('SHV', 1));
+    action('LNV_MINUS', () => easy.jog('LNV', -1)); action('LNV_PLUS', () => easy.jog('LNV', 1));
+    action('SNV_MINUS', () => easy.jog('SNV', -1)); action('SNV_PLUS', () => easy.jog('SNV', 1));
+    action('KHV_MINUS', () => easy.jog('KHV', -1)); action('KHV_PLUS', () => easy.jog('KHV', 1));
+    action('MEMORY_SAVE', () => easy.armMemorySave());
+    action('M1', () => easy.memory(0)); action('M2', () => easy.memory(1)); action('M3', () => easy.memory(2));
+    action('EXIT_SAVE', () => easy.save(easy.selectedSeat));
+    action('EXIT_MOVE', () => easy.move(easy.selectedSeat));
     action('STOP', () => easy.stop());
     easy.on('change', draw);
 

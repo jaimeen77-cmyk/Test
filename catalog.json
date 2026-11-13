@@ -25,9 +25,9 @@
     {
       "id": "seats_easy_access",
       "kind": "app",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "title": "Seats Easy Access",
-      "description": "Save and control front-seat Easy Access positions on iDrive 7.",
+      "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
       "mguHmi": [
         "ID7"
       ],
@@ -37,10 +37,10 @@
         "mgu-deploy": "0.7.11"
       },
       "artifact": {
-        "name": "seats_easy_access@0.2.0.tgz",
-        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/test/main/downloads/seats_easy_access@0.2.0.tgz",
-        "size": 9973,
-        "sha256": "2ea7ee68b76d8e4342d68d4e159d133ccb799b8a738ad40fcefa4858af935ecb"
+        "name": "seats_easy_access@0.3.0.tgz",
+        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/test/main/downloads/seats_easy_access@0.3.0.tgz",
+        "size": 278714,
+        "sha256": "fb1f5cc4e4499c0da81349d5ec8f2508c8bc50c541beaa0a5b3e07003cdf3644"
       }
     }
   ]

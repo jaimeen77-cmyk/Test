@@ -1,8 +1,8 @@
 {
   "id": "seats_easy_access",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "title": "Seats Easy Access",
-  "description": "Save and control driver and passenger Easy Access positions on iDrive 7.",
+  "description": "Graphical front-seat controls, memories and Easy Access for iDrive 7.",
   "mguHmi": ["ID7"],
   "requires": {
     "iteriodev-comfort": "0.5.1",

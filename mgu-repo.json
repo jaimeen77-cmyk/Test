@@ -23,9 +23,9 @@
     },
     {
       "id": "seats_easy_access",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "title": "Seats Easy Access",
-      "description": "Save and control front-seat Easy Access positions on iDrive 7.",
+      "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
       "mguHmi": [
         "ID7"
       ],
@@ -38,7 +38,7 @@
       "uninstallable": true,
       "build": {
         "python": "seats-easy-access/tools/build.py",
-        "output": "seats-easy-access/dist/USB/mgu-repo/seats-easy-access/seats_easy_access@0.2.0.tgz"
+        "output": "seats-easy-access/dist/USB/mgu-repo/seats-easy-access/seats_easy_access@0.3.0.tgz"
       }
     }
   ]

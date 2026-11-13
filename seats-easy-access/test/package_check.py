@@ -26,8 +26,11 @@ with tarfile.open(package) as archive:
     ET.fromstring(read('rhmiData/uiDescriptions/ID7/application.xml'))
     ui = json.loads(read('rhmiData/uiDescriptions/ID7/uiDescription.json'))
     components = {c['name']: c for state in ui['containers'].values() for c in state['components'].values()}
-    for name in ['AUTO_TOGGLE', 'DRIVER_SAVE', 'DRIVER_MOVE', 'PASSENGER_SAVE', 'PASSENGER_MOVE']:
+    for name in ['AUTO_TOGGLE', 'SELECT_DRIVER', 'SELECT_PASSENGER', 'SLV_MINUS', 'SLV_PLUS',
+                 'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS', 'SNV_MINUS', 'SNV_PLUS',
+                 'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3', 'EXIT_SAVE', 'EXIT_MOVE']:
         assert components[name]['properties']['Enabled']['value'] == 0
+    assert b'seat-control.png' in read('rhmiData/uiDescriptions/ID7/uiDescription.json')
     korean = json.loads(read('rhmiData/variantGroups/Common/texts/ko_KR.json'))
     assert '시트' in korean['SID_SEATS_EASY_ACCESS_TITLE']
     manifest = json.loads(read('manifest.json'))

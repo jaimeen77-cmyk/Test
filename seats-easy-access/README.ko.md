@@ -1,11 +1,13 @@
-# Seats Easy Access 0.2.0
+# Seats Easy Access 0.3.0
 
-iDrive 7 화면에서 운전석과 조수석의 하차 위치를 저장하고, 자동 Easy Access를 켜거나 끄는 앱입니다. 실제 시트 제어와 문·시동·착좌 조건 판단은 별도로 설치된 **IterioDev Comfort 0.5.1 이상**이 담당합니다.
+iDrive 7 화면에서 실제 시트 그림을 보며 운전석과 조수석을 조절하고, 메모리와 Easy Access를 사용하는 앱입니다. 실제 시트 제어와 문·시동·착좌 조건 판단은 별도로 설치된 **IterioDev Comfort 0.5.1 이상**이 담당합니다.
 
 ## 기능
 
 - 운전석과 조수석의 현재 위치를 하차 위치로 저장
 - 저장된 하차 위치로 수동 이동
+- 전후·높이·등받이·쿠션·헤드레스트 수동 조절
+- 운전석·조수석 각각 M1~M3 저장과 호출
 - 자동 Easy Access 전체 켜기/끄기
 - 시트 이동 즉시 정지 요청
 - 위치 센서가 없는 시트에서는 저장·Easy Access 버튼 자동 잠금
@@ -15,7 +17,7 @@ iDrive 7 화면에서 운전석과 조수석의 하차 위치를 저장하고, �
 
 ## 설치
 
-`seats-easy-access-0.2.0-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
+`seats-easy-access-0.3.0-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
 
 필수 구성:
 

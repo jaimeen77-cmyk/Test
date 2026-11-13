@@ -18,31 +18,44 @@ from rhmi_layout import build_ui, manifest_for, sid
 
 ROOT = Path(__file__).resolve().parent.parent
 ID = 'seats_easy_access'
-VERSION = '0.2.0'
+VERSION = '0.3.0'
 NS = uuid.UUID('367cc856-ae4d-4aef-b5a3-cd8b1997d25e')
 LANGS = ['en_GB', 'en_US', 'ko_KR', 'de_DE']
 ITEMS = [
+    ['graphic', 'SEAT_GFX', 'seat-control.png'],
     ['text3', 'STATUS', 'Refresh the Comfort status first.'],
+    ['twocol', 'SELECTED', 'Selected seat'],
+    ['button', 'SELECT_DRIVER', 'Driver seat'],
+    ['button', 'SELECT_PASSENGER', 'Passenger seat'],
     ['twocol', 'AUTO', 'Automatic Easy Access'],
     ['twocol', 'DRIVER', 'Driver seat'],
     ['twocol', 'PASSENGER', 'Passenger seat'],
     ['twocol', 'VEHICLE', 'Vehicle status'],
     ['button', 'REFRESH', 'Refresh status'],
     ['button', 'AUTO_TOGGLE', 'Turn automatic Easy Access on/off'],
-    ['button', 'DRIVER_SAVE', 'Save driver exit position'],
-    ['button', 'DRIVER_MOVE', 'Move driver seat to exit position'],
-    ['button', 'PASSENGER_SAVE', 'Save passenger exit position'],
-    ['button', 'PASSENGER_MOVE', 'Move passenger seat to exit position'],
+    ['button', 'SLV_MINUS', '◀'], ['button', 'SLV_PLUS', '▶'],
+    ['button', 'SHV_MINUS', '높이 ▼'], ['button', 'SHV_PLUS', '높이 ▲'],
+    ['button', 'LNV_MINUS', '등받이 ◀'], ['button', 'LNV_PLUS', '등받이 ▶'],
+    ['button', 'SNV_MINUS', '쿠션 ▼'], ['button', 'SNV_PLUS', '쿠션 ▲'],
+    ['button', 'KHV_MINUS', '헤드레스트 ▼'], ['button', 'KHV_PLUS', '헤드레스트 ▲'],
+    ['button', 'MEMORY_SAVE', '메모리 저장'],
+    ['button', 'M1', 'M1'], ['button', 'M2', 'M2'], ['button', 'M3', 'M3'],
+    ['button', 'EXIT_SAVE', '현재 위치를 하차 위치로 저장'],
+    ['button', 'EXIT_MOVE', '하차 위치로 이동'],
     ['button', 'STOP', 'STOP seat movement'],
     ['text3', 'GUIDE', 'Park before saving or testing. Keep the seat path clear and the physical seat switch within reach.'],
 ]
 KOREAN = {
-    'TITLE': '시트 Easy Access', 'MAIN_TITLE': '시트 Easy Access',
+    'TITLE': '시트', 'MAIN_TITLE': '시트',
     'STATUS': 'Comfort 상태를 먼저 확인하세요.',
+    'SELECTED': '선택 시트', 'SELECT_DRIVER': '운전석', 'SELECT_PASSENGER': '조수석',
     'AUTO': '자동 Easy Access', 'DRIVER': '운전석', 'PASSENGER': '조수석', 'VEHICLE': '차량 상태',
     'REFRESH': '상태 새로 확인', 'AUTO_TOGGLE': '자동 Easy Access 켜기 / 끄기',
-    'DRIVER_SAVE': '현재 운전석을 하차 위치로 저장', 'DRIVER_MOVE': '운전석 하차 위치로 이동',
-    'PASSENGER_SAVE': '현재 조수석을 하차 위치로 저장', 'PASSENGER_MOVE': '조수석 하차 위치로 이동',
+    'SLV_MINUS': '◀', 'SLV_PLUS': '▶', 'SHV_MINUS': '높이 ▼', 'SHV_PLUS': '높이 ▲',
+    'LNV_MINUS': '등받이 ◀', 'LNV_PLUS': '등받이 ▶', 'SNV_MINUS': '쿠션 ▼', 'SNV_PLUS': '쿠션 ▲',
+    'KHV_MINUS': '헤드레스트 ▼', 'KHV_PLUS': '헤드레스트 ▲',
+    'MEMORY_SAVE': '메모리 저장', 'M1': 'M1', 'M2': 'M2', 'M3': 'M3',
+    'EXIT_SAVE': '현재 위치를 하차 위치로 저장', 'EXIT_MOVE': '하차 위치로 이동',
     'STOP': '시트 이동 정지',
     'GUIDE': '저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요.',
 }
@@ -92,10 +105,13 @@ def main():
     # Disabled in the installed resources as well as in the runtime policy.
     for container in ui['containers'].values():
         for component in container['components'].values():
-            if component['name'] in ('AUTO_TOGGLE', 'DRIVER_SAVE', 'DRIVER_MOVE', 'PASSENGER_SAVE', 'PASSENGER_MOVE'):
+            if component['name'] in ('AUTO_TOGGLE', 'SELECT_DRIVER', 'SELECT_PASSENGER',
+                    'SLV_MINUS', 'SLV_PLUS', 'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS',
+                    'SNV_MINUS', 'SNV_PLUS', 'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3',
+                    'EXIT_SAVE', 'EXIT_MOVE'):
                 component.setdefault('properties', {})['Enabled'] = {'value': 0, 'type': 'UInt'}
     pkg_json = {
-        'name': ID, 'version': VERSION, 'description': 'Front-seat Easy Access controller for iDrive 7',
+        'name': ID, 'version': VERSION, 'description': 'Graphical seat controls, memories and Easy Access for iDrive 7',
         'main': 'javascript/app.js', 'license': 'MIT', 'author': 'Seats Easy Access contributors',
         'mguHmi': ['ID7'], 'engines': {'node': '>=8.7.0'},
         'oapAppSettings': {'maxDiskUsage': 2097152, 'cpuLimit': 15, 'memoryThresholdKB': 65536,
@@ -132,6 +148,7 @@ def main():
         write_json(rhmi / ('variantGroups/Common/texts/' + lang + '.json'), translated)
     images = rhmi / 'variantGroups/Common/images'
     images.mkdir(parents=True); icon(images / (ID + '_icon.png'))
+    shutil.copy(ROOT / 'assets/seat-control.png', images / 'seat-control.png')
     usb = dist / 'USB/mgu-repo/seats-easy-access'
     usb.mkdir(parents=True)
     package = usb / (ID + '@' + VERSION + '.tgz')
@@ -145,7 +162,7 @@ def main():
     }]})
     shutil.copy(ROOT / 'README.ko.md', dist / 'USB/README.ko.md')
     (dist / 'USB/SHA256SUMS.txt').write_text(digest + '  mgu-repo/seats-easy-access/' + package.name + '\n')
-    zip_path = dist / 'seats-easy-access-0.2.0-usb.zip'
+    zip_path = dist / 'seats-easy-access-0.3.0-usb.zip'
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
         for file in sorted((dist / 'USB').rglob('*')):
             if file.is_file(): z.write(file, file.relative_to(dist / 'USB'))

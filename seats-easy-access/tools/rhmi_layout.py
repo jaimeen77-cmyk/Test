@@ -221,7 +221,7 @@ def build_ui(spec, language='en'):
                 if kindi == 'twocol':
                     rows = [{'Text1stCol': {'value': label, 'type': 'Text'}, 'Text2ndCol': {'value': '', 'type': 'Text'}}]
                 elif kindi in ('graphic',):
-                    rows = [{'Graphic': {'value': '', 'type': 'Text'}}]
+                    rows = [{'Graphic': {'value': label, 'type': 'Text'}}]
                 elif kindi == 'laptimer':
                     rows = [{}]
                 else:

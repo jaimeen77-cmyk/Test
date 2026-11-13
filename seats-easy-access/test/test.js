@@ -29,7 +29,9 @@ class FakeClient extends EventEmitter {
     assert.equal(state.settings.easyExit, false);
     assert.deepStrictEqual(state.seats.axes.driver, ['SLV', 'LNV']);
     assert.equal(validCommand({ op: 'exit', seat: 'driver', save: true }), true);
-    assert.equal(validCommand({ op: 'jog', seat: 'driver', axis: 'SLV', dir: 1 }), false);
+    assert.equal(validCommand({ op: 'jog', seat: 'driver', axis: 'SLV', dir: 1 }), true);
+    assert.equal(validCommand({ op: 'memory', seat: 'driver', slot: 0, save: false }), true);
+    assert.equal(validCommand({ op: 'memory', seat: 'driver', slot: 4, save: false }), false);
     assert.equal(validCommand({ op: 'set', settings: { easyExit: true } }), true);
 
     const client = new FakeClient(), easy = new EasyAccess(client);
@@ -40,11 +42,19 @@ class FakeClient extends EventEmitter {
     await easy.toggle();
     assert.equal(client.state.settings.easyExit, true);
     await easy.move('driver');
+    await easy.jog('SLV', 1);
+    easy.armMemorySave();
+    await easy.memory(0);
+    await easy.memory(1);
     await easy.stop();
     assert.deepStrictEqual(client.sent.filter((q) => q.op !== 'get'), [
         { op: 'exit', seat: 'driver', save: true },
         { op: 'set', settings: { easyExit: true } },
         { op: 'exit', seat: 'driver', save: false },
+        { op: 'jog', seat: 'driver', axis: 'SLV', dir: 1 },
+        { op: 'stop' },
+        { op: 'memory', seat: 'driver', slot: 0, save: true },
+        { op: 'memory', seat: 'driver', slot: 1, save: false },
         { op: 'stop' },
     ]);
 

@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -51,6 +51,12 @@ function validCommand(message) {
     if ((message.op === 'get' || message.op === 'stop') && Object.keys(message).length === 1) return true;
     if (message.op === 'exit' && (message.seat === 'driver' || message.seat === 'passenger') &&
         typeof message.save === 'boolean' && Object.keys(message).length === 3) return true;
+    if (message.op === 'jog' && (message.seat === 'driver' || message.seat === 'passenger') &&
+        /^(SLV|SHV|LNV|SNV|KHV)$/.test(message.axis) && (message.dir === 1 || message.dir === -1) &&
+        Object.keys(message).length === 4) return true;
+    if (message.op === 'memory' && (message.seat === 'driver' || message.seat === 'passenger') &&
+        [0, 1, 2].indexOf(message.slot) >= 0 && typeof message.save === 'boolean' &&
+        Object.keys(message).length === 4) return true;
     return message.op === 'set' && message.settings && typeof message.settings.easyExit === 'boolean' &&
         Object.keys(message).length === 2 && Object.keys(message.settings).length === 1;
 }
@@ -117,12 +123,19 @@ class ComfortClient extends EventEmitter {
 
 class EasyAccess extends EventEmitter {
     constructor(client) {
-        super(); this.client = client; this.foreground = false; this.pending = false; this.message = '상태를 확인하세요.';
+        super(); this.client = client; this.foreground = false; this.pending = false; this.moving = false;
+        this.selectedSeat = 'driver'; this.saveMemory = false; this.message = '상태를 확인하세요.';
         client.on('state', () => this.emit('change'));
         client.on('lost', () => { this.message = 'Comfort 연결이 끊겼습니다.'; this.emit('change'); });
     }
     setForeground(on) { this.foreground = !!on; this.emit('change'); }
     state() { return this.client.state; }
+    selectSeat(who) {
+        if (who !== 'driver' && who !== 'passenger') throw new Error('지원하지 않는 시트입니다.');
+        this.selectedSeat = who; this.saveMemory = false;
+        this.message = who === 'driver' ? '운전석을 선택했습니다.' : '조수석을 선택했습니다.';
+        this.emit('change');
+    }
     seatReady(who) {
         const state = this.state();
         if (!state) return 'Comfort 상태를 먼저 확인하세요.';
@@ -167,6 +180,35 @@ class EasyAccess extends EventEmitter {
         const blocked = this.actionReady(who, true); if (blocked) throw new Error(blocked);
         return this.request({ op: 'exit', seat: who, save: false },
             (who === 'driver' ? '운전석' : '조수석') + ' Easy Access 이동을 요청했습니다.');
+    }
+    async jog(axis, direction) {
+        const who = this.selectedSeat;
+        const blocked = this.actionReady(who, false); if (blocked) throw new Error(blocked);
+        const state = this.state();
+        if (state.seats.axes[who].indexOf(axis) < 0) throw new Error('이 시트가 지원하지 않는 조절 축입니다.');
+        this.pending = true; this.moving = true; this.message = '시트 이동 중…'; this.emit('change');
+        let moveError = null;
+        try { await this.client.send({ op: 'jog', seat: who, axis: axis, dir: direction }); }
+        catch (error) { moveError = error; }
+        await new Promise((resolve) => setTimeout(resolve, 250));
+        try { await this.client.send({ op: 'stop' }); }
+        catch (error) { if (!moveError) moveError = error; }
+        this.pending = false; this.moving = false;
+        if (moveError) { this.message = '이동 실패: ' + moveError.message; this.emit('change'); throw moveError; }
+        this.message = '짧은 이동을 완료했습니다.'; this.emit('change');
+    }
+    armMemorySave() {
+        if (!this.foreground) throw new Error('앱 화면이 활성화되어 있어야 합니다.');
+        this.saveMemory = !this.saveMemory;
+        this.message = this.saveMemory ? '저장할 M1~M3 버튼을 누르세요.' : '메모리 저장을 취소했습니다.';
+        this.emit('change');
+    }
+    async memory(slot) {
+        const who = this.selectedSeat;
+        const blocked = this.actionReady(who, true); if (blocked) throw new Error(blocked);
+        const save = this.saveMemory; this.saveMemory = false;
+        return this.request({ op: 'memory', seat: who, slot: slot, save: save },
+            (who === 'driver' ? '운전석' : '조수석') + ' M' + (slot + 1) + (save ? '에 저장했습니다.' : ' 호출을 요청했습니다.'));
     }
     async stop() {
         if (!this.foreground) throw new Error('앱 화면이 활성화되어 있어야 합니다.');
