@@ -1,6 +1,6 @@
 {
   "id": "seats_easy_access",
-  "version": "0.6.0",
+  "version": "0.6.4",
   "title": "Seats Easy Access",
   "description": "Seat controls, memories, Easy Access and passenger Make room",
   "vendor": "custom",
@@ -83,6 +83,26 @@
         [
           "BTN_STOP",
           "STOP"
+        ],
+        [
+          "BTN_LOGS",
+          "Logs"
+        ],
+        [
+          "BTN_LOG_HOLD",
+          "Pause for photo"
+        ],
+        [
+          "BTN_LOG_OLDER",
+          "Older"
+        ],
+        [
+          "BTN_LOG_NEWER",
+          "Newer"
+        ],
+        [
+          "BTN_LOG_REFRESH",
+          "Refresh logs"
         ]
       ]
     }
@@ -128,7 +148,32 @@
       "Refresh": "새로 확인",
       "PREVIEW": "미리보기",
       "STOP": "정지",
-      "Adjustment": "조절 축"
+      "Adjustment": "조절 축",
+      "Logs": "로그",
+      "Easy Access logs": "Easy Access 진단 로그",
+      "Comfort journal": "Comfort 서비스 로그",
+      "Journal unavailable · status events only": "서비스 로그 읽기 불가 · 상태 변화만 표시",
+      "Power": "전원",
+      "Stationary": "정차",
+      "On": "켜짐",
+      "Off": "꺼짐",
+      "Unknown": "미확인",
+      "Job": "이동 작업",
+      "Idle": "대기",
+      "Driver return": "운전석 복귀",
+      "Passenger return": "조수석 복귀",
+      "Pending": "복귀 대기",
+      "None": "없음",
+      "Last status": "상태 수신",
+      "Waiting for Comfort events…": "Comfort 상태를 기다리는 중…",
+      "Resume": "실시간 재개",
+      "Pause for photo": "사진 찍기 · 일시정지",
+      "Older": "이전 기록",
+      "Newer": "다음 기록",
+      "Refresh logs": "로그 새로 확인",
+      "Paused": "화면 일시정지",
+      "Live": "실시간",
+      "Status read failed": "상태 조회 실패"
     }
   }
 }

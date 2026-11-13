@@ -1,4 +1,4 @@
-# Seats Easy Access 0.6.0
+# Seats Easy Access 0.6.4
 
 공용 캔버스 기반으로 실제 시트 이미지·원형 조절 버튼·운전석/조수석 탭을 표시합니다. 대상 프로젝트에서 `node kit/tools/emu.js seats_easy_access`로 실행하세요. PC에서는 미리보기 표시와 모의 상태를 사용하며 차량 소켓에 연결하지 않습니다.
 
@@ -66,4 +66,4 @@ python3 kit/tools/make_kit.py seats_easy_access
 
 ## 하차 후 원위치로 복귀하지 않을 때
 
-원래 위치를 다시 저장하기 전에 [복귀 진단 안내](../../docs/SEATS-DIAGNOSTICS.ko.md)의 조회 전용 수집기로 한 번 재현해 기록하세요. 자동 복귀는 Comfort가 담당하며, 문·전원·착좌·정차 판정과 Seats 화면 종료 시각을 비교해야 합니다.
+원래 위치를 다시 저장하기 전에 증상을 한 번 재현한 뒤 **로그 → 사진용 일시정지**를 누르고 화면을 촬영하세요. 이전 기록도 페이지를 넘겨 촬영할 수 있습니다. [복귀 진단 안내](../../docs/SEATS-DIAGNOSTICS.ko.md)에 자세한 절차가 있습니다. 자동 복귀는 Comfort가 담당하며, 이 탭은 상태와 로그를 읽기만 합니다.

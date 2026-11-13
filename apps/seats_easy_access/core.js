@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.6.0';
+const VERSION = '0.6.4';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -229,4 +229,37 @@ class EasyAccess extends EventEmitter {
     }
 }
 
-module.exports = { ComfortClient, EasyAccess, stateOf, validCommand, bounded, VERSION, SOCKET };
+// Comfort moves a seat by itself on the doors (easy exit out and back) and keeps those moves going without any
+// app, but its 'stop' halts every move, its own included, and a halted way back is not tried again until the
+// door opens once more. So leaving the screen or shutting down stops only a move this app asked for
+// (jog, memory, Easy Access button, Make room); the STOP button still stops anything.
+function ownMoves(client, now) {
+    const clock = now || Date.now;
+    const send = client.send.bind(client);
+    let own = false, seen = false, at = 0;
+    // 'back' (the way back after easy exit) is only ever Comfort's own
+    const busy = (s) => !!(s && (s.seats.moving || (s.seats.job && s.seats.job !== 'back')));
+    const expire = () => { if (own && !seen && clock() - at > 3000) own = false; };   // asked, but Comfort never moved
+    client.send = (message) => {
+        const m = message || {};
+        if (m.op === 'jog' || m.op === 'gentleman' || ((m.op === 'exit' || m.op === 'memory') && m.save === false)) {
+            own = true; seen = false; at = clock();
+        } else if (m.op === 'stop') own = false;
+        return send(message);
+    };
+    client.on('state', (s) => {
+        expire();
+        if (!own) return;
+        if (busy(s)) seen = true;
+        else if (seen) own = false;
+    });
+    return {
+        active() {
+            expire();
+            return own && busy(client.state);
+        },
+        stop() { return this.active() ? client.send({ op: 'stop' }) : Promise.resolve(); },
+    };
+}
+
+module.exports = { ComfortClient, EasyAccess, ownMoves, stateOf, validCommand, bounded, VERSION, SOCKET };
