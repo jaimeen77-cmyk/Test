@@ -14,11 +14,12 @@
         "mgu-deploy": "0.7.11"
       },
       "kind": "app",
-      "path": "seats-easy-access",
+      "path": "apps/seats",
       "uninstallable": true,
       "build": {
-        "python": "seats-easy-access/tools/build.py",
-        "output": "seats-easy-access/dist/USB/mgu-repo/seats-easy-access/seats_easy_access@0.3.2.tgz"
+        "python": "kit/tools/build.py",
+        "args": ["--language", "ko", "seats_easy_access"],
+        "output": "dist/seats_easy_access@0.3.2.tgz"
       }
     }
   ]
