@@ -4,5 +4,6 @@ g20-seat-test/dist/
 apps/seats_easy_access/dist/
 dist/
 store-release/
+store/runtime/*.tgz
 seat-test.log*
 seat-test-report.json

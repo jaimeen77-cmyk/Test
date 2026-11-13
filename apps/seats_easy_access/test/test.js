@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('assert');
 const EventEmitter = require('events');
-const { EasyAccess, stateOf, validCommand } = require('../src/core');
+const { EasyAccess, stateOf, validCommand } = require('../core');
 
 function raw(overrides) {
     const value = { state: { parked: true, carOn: true, settings: { easyExit: false }, seats: {

@@ -2,7 +2,7 @@
 
 2020 BMW G20과 iDrive 7에서 시험하기 위한 시트 앱 저장소입니다. BMW SDK·펌웨어나 IterioDev Comfort 바이너리는 포함하지 않습니다.
 
-## Seats Easy Access 0.3.2
+## Seats Easy Access 0.4.0
 
 실제 시트 그림을 중심으로 운전석과 조수석을 조절하고 메모리와 Easy Access를 사용하는 앱입니다.
 
@@ -17,11 +17,11 @@
 - 정차 상태, 화면 포커스, 시트 위치 센서 확인
 - 위치 센서가 없는 시트의 저장·이동 버튼 자동 잠금
 
-[한국어 설치·사용 안내](apps/seats_easy_access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.2-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.2.tgz)
+[한국어 설치·사용 안내](apps/seats_easy_access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.4.0-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.4.0.tgz)
 
 ## MGU Store 설치
 
-**간편 설치 (HTTPS 카탈로그):** Store → Settings → Add source에 `https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/catalog.json`을 입력하세요. **Seats Easy Access 0.3.2**를 선택해 설치합니다. `IterioDev/car-apps` 소스도 추가해야 Comfort 의존성을 설치할 수 있습니다. 이 방법은 완성된 OAP 패키지를 내려받으므로 차량에서 Python 빌드를 실행하지 않습니다.
+**간편 설치 (HTTPS 카탈로그):** Store → Settings → Add source에 `https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/catalog.json`을 입력하세요. **Seats Easy Access 0.4.0**을 선택해 설치합니다. `IterioDev/car-apps` 소스도 추가해야 Comfort 의존성을 설치할 수 있습니다.
 
 **소스 빌드 (main):** 아래 방법을 사용합니다.
 
@@ -39,14 +39,21 @@ GitHub Releases 배포는 아직 제공되지 않습니다. 현재는 위 HTTPS 
 - `mgu-deploy` 0.7.11 이상
 - 원본 `iteriodev-comfort` 0.5.1 이상 (`IterioDev/car-apps`)
 
-## 개발 검사
+## 기존 프로젝트의 공용 빌드·설치
+
+Cluster Redline·Storage처럼 원본 프로젝트에 overlay로 합친 뒤 빌드합니다. 이 저장소에서:
+
+```sh
+python tools/install-overlay.py ../idrive7-apps --apps seats_easy_access
+```
+
+대상 프로젝트에서:
 
 ```sh
 python3 kit/tools/build.py --language ko seats_easy_access
-node apps/seats_easy_access/test/test.js
-python3 apps/seats_easy_access/test/package_check.py
+python3 kit/tools/make_kit.py seats_easy_access --language ko
 ```
 
-소스는 `apps/seats_easy_access/`에 있으며 공용 빌드 결과는 `dist/`에 생성됩니다. 설치 앱 ID는 `seats_easy_access`입니다.
+소스는 `apps/seats_easy_access/`입니다. 대상의 원래 공용 빌더가 `.mgu`, `.tgz`와 설치 키트를 생성합니다. 별도 Seats 빌더로 공용 파일을 덮어쓰지 않습니다. [상세 안내](docs/SEATS-OVERLAY.ko.md)
 
 실차 검증 전까지 실험용으로 취급하세요. 앱의 정지 요청은 물리적인 시트 정지를 보장하지 않으므로 처음 시험할 때는 순정 시트 스위치에 손이 닿는 상태를 유지해야 합니다.

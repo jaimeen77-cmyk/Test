@@ -1,4 +1,4 @@
-# Seats Easy Access 0.3.2
+# Seats Easy Access 0.4.0
 
 **Make room:** 조수석 탭에서 공간 확보 버튼을 누르면 Comfort가 조수석을 앞으로 이동하고 등받이를 기울입니다. 공간을 확보한 뒤에는 버튼이 원위치 복귀로 바뀝니다. 정차 상태이며 위치 센서가 있는 조수석에서 사용하세요. 이동 중에는 정지 버튼을 사용합니다.
 
@@ -21,7 +21,7 @@ iDrive 7 화면에서 실제 시트 그림을 보며 운전석과 조수석을 �
 
 ## 설치
 
-`seats-easy-access-0.3.2-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
+MGU Store에서 이 저장소의 main 소스를 추가해 설치합니다. 기존 키트로 설치하려면 `tools/install-overlay.py`로 원본 프로젝트에 합친 뒤 공용 `make_kit.py`를 실행합니다. 자세한 절차는 저장소의 `docs/SEATS-OVERLAY.ko.md`에 있습니다.
 
 필수 구성:
 
@@ -52,9 +52,9 @@ Comfort는 이 저장소나 설치 파일에 포함하지 않습니다. `IterioD
 ## 개발
 
 ```sh
-node test/test.js
-python3 tools/build.py
-python3 test/package_check.py
+python3 kit/tools/build.py --language ko seats_easy_access
+node apps/seats_easy_access/test/test.js
+python3 kit/tools/make_kit.py seats_easy_access --language ko
 ```
 
 이 앱은 공개된 Comfort JSON 프로토콜을 사용하는 독립 클라이언트입니다. IterioDev 소스나 바이너리를 포함하거나 수정하지 않습니다.

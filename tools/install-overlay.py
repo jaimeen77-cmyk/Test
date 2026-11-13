@@ -1,61 +1,106 @@
 #!/usr/bin/env python3
-"""Install the Korean Seats source overlay into an MGU Store repository."""
+"""Copy selected Jam app sources and their shared tools into an upstream checkout."""
 import argparse
+import importlib.util
 import json
 from pathlib import Path
+import shutil
+import sys
 
-ROOT = Path(__file__).resolve().parent.parent
-APP = 'seats_easy_access'
+HERE = Path(__file__).resolve().parent.parent
+APPS = tuple(app for app in ('idrive_circuit', 'cluster_redline', 'storage', 'seats_easy_access')
+             if (HERE / 'apps' / app / 'app.json').is_file())
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('target', type=Path, help='대상 apps 저장소 경로')
-    parser.add_argument('--force', action='store_true', help='충돌하는 Seats 파일 교체')
+    parser.add_argument('target', type=Path)
+    parser.add_argument('--apps', nargs='+', choices=APPS, default=list(APPS))
+    parser.add_argument('--force', action='store_true', help='replace conflicting selected app/tool files')
+    parser.add_argument('--no-ko', action='store_true', help='leave the target Korean catalog unchanged')
     args = parser.parse_args()
-    target = args.target.resolve()
-    manifest = target / 'mgu-repo.json'
-    if target == ROOT or not manifest.is_file():
-        parser.error('별도의 MGU Store 저장소(mgu-repo.json 필요)를 지정하세요.')
-    data = json.loads(manifest.read_text(encoding='utf-8'))
-    components = data.setdefault('components', [])
-    if not isinstance(components, list):
-        parser.error('components가 목록인 저장소만 지원합니다.')
-    entry = {
-        'id': APP, 'version': '0.3.2', 'kind': 'app',
-        'title': '시트 Easy Access', 'description': '시트 조절·메모리·승하차 편의·조수석 공간 확보',
-        'path': 'apps/seats_easy_access', 'mguHmi': ['ID7'], 'uninstallable': True,
-        'requires': {'iteriodev-comfort': '0.5.1', 'mgu-deploy': '0.7.11'},
-        'build': {'python': 'kit/tools/build.py', 'args': ['--language', 'ko', APP],
-                  'output': 'dist/seats_easy_access@0.3.2.tgz'},
-    }
-    source = ROOT / 'apps/seats_easy_access'
-    files = {}
-    for file in source.rglob('*'):
-        relative = file.relative_to(source)
-        if not file.is_file() or any(p in ('dist', '__pycache__') for p in relative.parts) or file.suffix == '.pyc':
-            continue
-        content = file.read_bytes()
-        if relative.as_posix() == 'tools/build.py':
-            content = content.replace(b"LANGS = ['en_GB', 'en_US', 'ko_KR', 'de_DE']", b"LANGS = ['ko_KR']")
-            content = content.replace(b"'defaultLanguage': 'en_GB'", b"'defaultLanguage': 'ko_KR'")
-        files[target / 'apps/seats_easy_access' / relative] = content
-    files[target / 'kit/tools/build.py'] = (ROOT / 'kit/tools/build.py').read_bytes()
-    conflicts = [str(p) for p, content in files.items()
-                 if p.exists() and (not p.is_file() or p.read_bytes() != content)]
-    existing = [item for item in components if item.get('id') == APP]
-    if existing and existing != [entry]:
-        conflicts.append(str(manifest) + ' (Seats 항목)')
+    target = args.target.expanduser().resolve()
+    selected = list(dict.fromkeys(args.apps))
+    if target == HERE or not (target / 'kit/tools/build.py').is_file() or not (target / 'apps').is_dir():
+        parser.error('Target must be a separate upstream idrive7-apps checkout')
+    files = []
+    for app in selected:
+        files.extend(p.relative_to(HERE) for p in (HERE / 'apps' / app).rglob('*')
+                     if p.is_file() and not any(part in ('dist', '__pycache__') for part in p.relative_to(HERE).parts))
+        images = HERE / 'screenshots' / app
+        if images.is_dir():
+            files.extend(p.relative_to(HERE) for p in images.rglob('*') if p.is_file())
+        if app == 'idrive_circuit':
+            files += [Path('kit/icons/idrive_circuit.svg'), Path('kit/tools/test_idrive_circuit.js')]
+        elif app == 'cluster_redline':
+            files.extend(p.relative_to(HERE) for p in (HERE / 'tests/cluster_redline').glob('*.js'))
+    files += [Path('tools') / p for p in ('cluster-redline-preview.js', 'cluster-redline-preflight.js',
+                                       'cluster-redline-settings-preview.js', 'collect-cluster-redline.ps1', 'collect-redline-install.ps1', 'install-overlay.py', 'upstream-integration.py')]
+    files += [Path('tests') / p for p in ('metadata.test.js', 'standard-installer.test.py',
+                                       'standard-kit.test.py', 'overlay.test.py', 'collect-cluster-redline.test.py', 'collect-redline-install.test.py', 'cluster-redline-manifest.test.py', 'hud-slot-request.test.py', 'cluster-slot-takeover.test.py', 'native-hud-guidance.test.py', 'native-cluster-recovery.test.py', 'optional-guidance.test.py', 'optional-auxiliary.test.py', 'optional-lanes.test.py')]
+    files += [Path(p) for p in (
+        'docs/JAM-INTEGRATION.ko.md',
+        'docs/VALIDATION.ko.md',
+        'docs/CLUSTER-REDLINE.ko.md',
+        'docs/CLUSTER-REDLINE-HISTORY.ko.md',
+        'docs/CLUSTER-REDLINE.md',
+        'docs/INSTALL.ko.md',
+        'docs/INSTALL.md',
+        'localization/ko-additions.tsv',
+        'docs/REDLINE-INSTALL-FAILED.ko.md',
+        'docs/COLLECT-CLUSTER-REDLINE.ko.md',
+        'docs/CLUSTER-OVERLAY-RESEARCH.ko.md',
+        'docs/AUTO-RENDERER.ko.md',
+        'LICENSES/MPL-2.0.txt',
+        'LICENSES/GPL-3.0-or-later.txt',
+        'NOTICE.cluster-redline.md',
+        'patches/cluster-render-0.4.0-parked-recovery.patch',
+    )]
+    if selected == ['seats_easy_access']:
+        files = [p for p in files if p.parts[:2] == ('apps', 'seats_easy_access')]
+        files += [Path(p) for p in ('tools/install-overlay.py', 'tools/upstream-integration.py',
+                                   'docs/SEATS-OVERLAY.ko.md', 'localization/ko-additions.tsv')]
+    conflicts = [str(p) for p in files if (target / p).exists() and
+                 ((target / p).is_dir() or (target / p).read_bytes() != (HERE / p).read_bytes())]
     if conflicts and not args.force:
-        parser.error('충돌을 확인한 뒤 --force로 교체하세요: ' + ', '.join(conflicts))
-    # Resolve all conflicts before writing any app files or metadata.
-    for path, content in files.items():
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_bytes(content)
-    data['components'] = [item for item in components if item.get('id') != APP] + [entry]
-    manifest.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print('한국어 Seats overlay 설치 완료:', target)
-    print('MGU Store에서 대상 저장소의 main 소스를 새로고침하세요.')
+        parser.error('Inspect conflicting files, then use --force to replace them: ' + ', '.join(conflicts))
+    ko = target / 'kit/runtime/locales/ko.json'
+    if not args.no_ko and not ko.is_file():
+        parser.error('Korean runtime is missing; apply Korean support before merging translations')
+    integration_spec = importlib.util.spec_from_file_location('jam_integration', HERE / 'tools/upstream-integration.py')
+    integration = importlib.util.module_from_spec(integration_spec)
+    integration_spec.loader.exec_module(integration)
+    try:
+        planned = integration.plan_upstream(target)
+    except ValueError as error:
+        parser.error(str(error))
+    for relative in files:
+        destination = target / relative
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(HERE / relative, destination)
+    for path, content in planned.items():
+        path.write_bytes(content.encode('utf-8'))
+        print('integrate', path)
+    if not args.no_ko:
+        additions = dict(line.split('\t', 1) for line in (HERE / 'localization/ko-additions.tsv').read_text(encoding='utf-8').splitlines()
+                         if line and not line.startswith('#') and '\t' in line)
+        if 'storage' in selected:
+            # Storage keeps its Korean strings in app.json; the upstream build reads only the catalog.
+            additions.update(json.loads((HERE / 'apps/storage/app.json').read_text(encoding='utf-8'))['translations']['ko'])
+        words = json.loads(ko.read_text(encoding='utf-8'))
+        words.update(additions)
+        tsv = target / 'kit/runtime/locales/ko.tsv'
+        if tsv.is_file():
+            rows = dict(line.split('\t', 1) for line in tsv.read_text(encoding='utf-8').splitlines()
+                        if line and not line.startswith('#') and '\t' in line)
+            rows.update(additions)
+            tsv.write_text(''.join(key + '\t' + value + '\n' for key, value in rows.items()), encoding='utf-8')
+        ko.write_text(json.dumps(words, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    print('Installed source overlay:', ', '.join(selected))
+    print('Use normal commands in the target folder:')
+    print('  python kit/tools/build.py --language ko --preview-only ' + ' '.join(selected))
+    print('  python kit/tools/make_kit.py --language ko  # all apps')
+    print('  deploy/push-to-car.ps1 or deploy/push-to-car.sh check / install')
 
 
 if __name__ == '__main__':

@@ -3,7 +3,7 @@
   "components": [
     {
       "id": "seats_easy_access",
-      "version": "0.3.2",
+      "version": "0.4.0",
       "title": "Seats Easy Access",
       "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
       "mguHmi": [
@@ -17,9 +17,10 @@
       "path": "apps/seats_easy_access",
       "uninstallable": true,
       "build": {
-        "python": "kit/tools/build.py",
-        "args": ["--language", "ko", "seats_easy_access"],
-        "output": "dist/seats_easy_access@0.3.2.tgz"
+        "node": "tools/store-build.js",
+        "args": ["--template", "seats_easy_access", "--id", "{id}", "--version", "{version}", "--dir", "{dir}", "--language", "ko"],
+        "network": false,
+        "shared": ["store/runtime", "tools/store-build.js", "localization/ko-additions.tsv"]
       }
     }
   ]

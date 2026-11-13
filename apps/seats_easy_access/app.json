@@ -1,9 +1,180 @@
 {
   "id": "seats_easy_access",
-  "version": "0.3.2",
-  "title": "Seats Easy Access",
-  "description": "Graphical front-seat controls, memories and Easy Access for iDrive 7.",
-  "mguHmi": ["ID7"],
+  "version": "0.4.0",
+  "title": "시트 Easy Access",
+  "description": "시트 조절·메모리·승하차 편의·조수석 공간 확보",
+  "vendor": "custom",
+  "loggingId": "SEAT",
+  "iconGlyph": "S",
+  "mguHmi": [
+    "ID7"
+  ],
+  "supportedLanguages": [
+    "ko"
+  ],
+  "signals": {},
+  "staticImages": [
+    "assets/seat-control.png"
+  ],
+  "screens": [
+    {
+      "name": "MAIN",
+      "kind": "list",
+      "title": "시트 Easy Access",
+      "tabs": [
+        [
+          "SELECT_DRIVER",
+          "운전석"
+        ],
+        [
+          "SELECT_PASSENGER",
+          "조수석"
+        ]
+      ],
+      "items": [
+        [
+          "graphic",
+          "SEAT_GFX",
+          "seat-control.png"
+        ],
+        [
+          "text3",
+          "STATUS",
+          "Comfort 상태를 먼저 확인하세요."
+        ],
+        [
+          "twocol",
+          "SELECTED",
+          "선택 시트"
+        ],
+        [
+          "twocol",
+          "AUTO",
+          "자동 Easy Access"
+        ],
+        [
+          "twocol",
+          "DRIVER",
+          "운전석"
+        ],
+        [
+          "twocol",
+          "PASSENGER",
+          "조수석"
+        ],
+        [
+          "twocol",
+          "VEHICLE",
+          "차량 상태"
+        ],
+        [
+          "button",
+          "REFRESH",
+          "상태 새로 확인"
+        ],
+        [
+          "button",
+          "AUTO_TOGGLE",
+          "자동 Easy Access 켜기 / 끄기"
+        ],
+        [
+          "button",
+          "SLV_MINUS",
+          "◀"
+        ],
+        [
+          "button",
+          "SLV_PLUS",
+          "▶"
+        ],
+        [
+          "button",
+          "SHV_MINUS",
+          "높이 ▼"
+        ],
+        [
+          "button",
+          "SHV_PLUS",
+          "높이 ▲"
+        ],
+        [
+          "button",
+          "LNV_MINUS",
+          "등받이 ◀"
+        ],
+        [
+          "button",
+          "LNV_PLUS",
+          "등받이 ▶"
+        ],
+        [
+          "button",
+          "SNV_MINUS",
+          "쿠션 ▼"
+        ],
+        [
+          "button",
+          "SNV_PLUS",
+          "쿠션 ▲"
+        ],
+        [
+          "button",
+          "KHV_MINUS",
+          "헤드레스트 ▼"
+        ],
+        [
+          "button",
+          "KHV_PLUS",
+          "헤드레스트 ▲"
+        ],
+        [
+          "button",
+          "MEMORY_SAVE",
+          "메모리 저장"
+        ],
+        [
+          "button",
+          "M1",
+          "M1"
+        ],
+        [
+          "button",
+          "M2",
+          "M2"
+        ],
+        [
+          "button",
+          "M3",
+          "M3"
+        ],
+        [
+          "button",
+          "EXIT_SAVE",
+          "현재 위치를 하차 위치로 저장"
+        ],
+        [
+          "button",
+          "EXIT_MOVE",
+          "하차 위치로 이동"
+        ],
+        [
+          "button",
+          "MAKE_ROOM",
+          "Make room · 조수석 공간 확보"
+        ],
+        [
+          "button",
+          "STOP",
+          "시트 이동 정지"
+        ],
+        [
+          "text3",
+          "GUIDE",
+          "저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요."
+        ]
+      ]
+    }
+  ],
   "requires": {
     "iteriodev-comfort": "0.5.1",
     "mgu-deploy": "0.7.11"

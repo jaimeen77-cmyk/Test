@@ -1,0 +1,259 @@
+iDrive Circuit	아이드라이브 회로
+Next tile	다음 타일
+Previous level	이전 레벨
+Next level	다음 레벨
+Next level (locked)	다음 레벨 (잠김)
+Previous level (none)	이전 레벨 (없음)
+SYSTEM STATUS	시스템 상태
+POWERED	전원
+ROTATIONS	회전
+DEVICES	장치
+Undo	되돌리기
+Hint	힌트
+Restart	다시 시작
+Replay	다시 하기
+Previous	이전
+Next	다음
+PARK TO PLAY	주차 후 실행
+The circuit is paused while the vehicle is moving	주행 중 회로 퍼즐 일시 중지
+CIRCUIT ONLINE	회로 연결 완료
+STARS	별
+ONLINE	연결됨
+PARKED ONLY	주차 중
+Use Next tile and Rotate in the button bar	버튼 메뉴에서 다음 타일과 회전을 사용하세요
+First Light	첫 점등
+Rotate the centre wire to power the headlight	가운데 배선을 회전하여 전조등을 켜세요
+LEVEL	레벨
+PAR	최소
+Rotate	회전
+Parked only (pauses while driving)	주차 중에만 실행 (주행 중 일시 중지)
+Colour theme	화면 색상
+M Red	M 레드
+M Tricolour	M 삼색
+Ice White	아이스 화이트
+Night Amber	야간 앰버
+Screen layout	화면 배치
+Full screen	전체 화면
+Standard	표준
+Renderer	렌더러
+Software	소프트웨어
+GPU 60 fps (default)	GPU 60 fps (기본값)
+Cluster Redline	계기판 레드라인
+Show automatically in Sport	스포츠 모드 자동 표시
+Engine profile	엔진 프로필
+Petrol	가솔린
+Diesel	디젤
+Hybrid	하이브리드
+Shift alert RPM	변속 알림 회전수
+Redline RPM	레드라인 회전수
+RPM scale maximum	회전수 눈금 최댓값
+Profile default	프로필 기본값
+Cluster refresh rate	계기판 갱신 속도
+Autostart · Sport mode only	자동 시작 · 스포츠 모드 전용
+Automatic display off	자동 표시 꺼짐
+Waiting for cluster renderer	계기판 렌더러 연결 대기
+Check engine profile	엔진 프로필 확인 필요
+Hybrid engine stopped · hidden	하이브리드 엔진 정지 · 표시 안 함
+Renderer refused display	렌더러가 표시를 허용하지 않음
+Waiting for drive mode	주행 모드 신호 대기
+Normal mode · hidden	일반 모드 · 표시 안 함
+Waiting for engine RPM	엔진 회전수 신호 대기
+Check engine RPM	회전수 값 확인 필요
+Engine stopped · hidden	엔진 정지 · 표시 안 함
+Confirming Sport mode	스포츠 모드 확인 중
+Sport mode · display requested	스포츠 모드 · 표시 요청
+Background app stopped	백그라운드 앱 중지
+Waiting for status	상태 확인 대기
+Waiting for background app	백그라운드 앱 연결 대기
+Sport	스포츠
+Sport Plus	스포츠 플러스
+Sport Individual	스포츠 개별 설정
+Comfort	컴포트
+Comfort Plus	컴포트 플러스
+Comfort Individual	컴포트 개별 설정
+Eco Pro	에코 프로
+Eco Pro Plus	에코 프로 플러스
+Eco Pro Individual	에코 프로 개별 설정
+Adaptive	어댑티브
+Hidden	표시 안 함
+Waiting	표시 대기
+Shown	표시 중
+Suspended	표시 일시 중지
+Drive mode	주행 모드
+Cluster status	계기판 상태
+Checking	확인 중
+Check required	확인 필요
+Shift alert	변속 알림
+Redline / scale	레드라인 / 눈금
+Normal modes and stale signals release the central display.	일반 모드·신호 끊김에서는 중앙 화면을 점유하지 않습니다.
+The background app checks display conditions even when this screen is closed.	앱 화면을 열지 않아도 백그라운드에서 표시 조건을 확인합니다.
+SHIFT NOW	변속 시점
+Map slot	지도 영역
+Renderer version	렌더러 버전
+Map takeover	지도 우선 표시
+Display layer	표시 레이어
+Front center (test)	전면 중앙 (시험)
+Map area (legacy)	지도 영역 (기존)
+Display target	표시 영역
+Selected display target unavailable	선택한 표시 영역을 사용할 수 없음
+Widget size	위젯 크기
+Gear prefix	단수 앞 문자
+Automatic	자동
+Torque scale maximum	토크 눈금 최대
+Power scale maximum	마력 눈금 최대
+Power*	마력*
+Waiting for stable live signals	주행 신호가 안정되기를 기다리는 중
+Last display change	최근 표시 변경
+Upload waits	전송 대기
+Basic settings	기본설정
+Advanced settings	상세설정
+App auto start	앱 자동 켜짐
+Vehicle preset	차량 프리셋
+eDrive (PHEV)	eDrive (플러그인 하이브리드)
+Display mode	표시 모드
+Sport modes only	스포츠 모드만
+All drive modes	모두
+Power unit	마력 단위
+Torque unit	토크 단위
+Preset default	프리셋 기본값
+Set Instrument cluster > Central display area to Off for correct operation.	계기판 → 중심 표시 영역을 [꺼짐]으로 바꿔야 정상 작동합니다.
+Presets set gauge scales; eDrive shows engine output only, not combined output.	프리셋은 표시용 눈금입니다. eDrive는 합산 출력이 아닌 엔진 출력만 표시합니다.
+Refresh rate is a requested limit; actual output depends on the car.	갱신 속도는 요청 상한이며 실제 출력 속도는 차량에 따라 달라집니다.
+All drive modes · display requested	전체 모드 · 표시 요청
+Previous item	이전 항목
+Next item	다음 항목
+Value -	값 -
+Value +	값 +
+Selected	선택됨
+Status	상태
+Cancel	취소
+Select	선택
+Set Central display area to Map view or Off. Assist or route preview may cover the widget.	중심 표시 영역은 지도 보기 또는 꺼짐으로 설정하세요. 주행 보조·경로 미리보기는 가릴 수 있습니다.
+Install Cluster renderer (cluster-render) from MGU Store first.	먼저 MGU 스토어에서 클러스터 렌더러(cluster-render)를 설치하세요.
+Fixed 20 fps request limit; actual output depends on the car.	갱신 속도는 20fps로 고정되며 실제 출력 속도는 차량에 따라 달라집니다.
+HUD (RPM / gear / shift)	HUD (회전수·기어·변속 알림)
+HUD only; cluster output stops. Stock HUD guidance may take priority.	HUD만 표시하며 계기판 출력은 중지됩니다. 순정 HUD 안내가 우선할 수 있습니다.
+Map area (recommended)	지도 영역 (권장)
+Map slot acquired	지도 표시 영역 확보됨
+Waiting for stock map release	순정 지도 영역 해제 대기
+Waiting for map acquisition	지도 표시 영역 확보 대기
+Guidance hide unavailable	내비 안내 상자 숨김 사용 불가
+Redline display mode	레드라인 표시 모드
+Cluster display	계기판 표시
+HUD display	HUD 표시
+Stock display	순정 표시
+Position / size	위치 / 크기
+Adjust	조절
+Position	위치
+Gauge width	가로 크기
+Gauge height	세로 크기
+Coordinates	좌표
+Cluster	계기판
+HUD	HUD
+Back	뒤로가기
+HUD area acquired	HUD 영역 확보됨
+Waiting for HUD area	HUD 영역 확보 대기
+Stock HUD guidance has priority; same-slot content cannot be shown together.	순정 HUD 안내가 우선합니다. 같은 표시 영역의 화면은 동시에 표시할 수 없습니다.
+Check HUD guidance-yield settings	HUD 순정 안내 양보 설정 확인
+Stock displays selected; Redline does not occupy either display.	순정 표시가 선택되어 레드라인이 계기판과 HUD 표시 영역을 사용하지 않습니다.
+Stock navigation active · HUD released	순정 길안내 중 · HUD 양보
+Calculating route · HUD released	경로 계산 중 · HUD 양보
+Waiting for navigation state · HUD released	내비 상태 확인 중 · HUD 양보
+Navigation state stale · HUD released	내비 상태 갱신 대기 · HUD 양보
+Navigation state unavailable · HUD released	내비 상태 확인 불가 · HUD 양보
+Recovering renderer layer	출력 레이어 복구 중
+Waiting for other display release	다른 화면의 영역 반환 대기
+Native display service unavailable	차량 표시 서비스 연결 대기
+
+HUD navigation	HUD 길안내
+HUD navigation shows received turn guidance; unavailable data preserves stock guidance.	수신된 회전 안내를 HUD에 표시합니다. 안내 데이터를 읽을 수 없으면 순정 안내를 유지합니다.
+Navigation width	길안내 가로 크기
+Navigation height	길안내 세로 크기
+Waiting for navigation data · stock HUD preserved	길안내 데이터 대기 · 순정 HUD 유지
+Waiting for phone guidance state · stock HUD preserved	휴대폰 안내 상태 대기 · 순정 HUD 유지
+Phone guidance state stale · stock HUD preserved	휴대폰 안내 상태 만료 · 순정 HUD 유지
+Sport / Comfort Plus	스포츠 / 컴포트 플러스
+Comfort Plus · display requested	컴포트 플러스 · 표시 요청
+Confirming drive mode	주행 모드 확인 중
+App operation	앱 실행
+Start app	앱 켜기
+Stop app	앱 끄기
+Running	실행 중
+Stopped	중지됨
+HUD appearance	HUD 화면 설정
+HUD shift alert	HUD 변속 알림
+Top alert bar	상단 알림선
+Circle beside gear	기어 옆 원형 알림
+HUD torque / power	HUD 토크 · 마력 표시
+Gauges	게이지
+Values only	숫자만
+HUD preview	HUD 미리보기
+Highway entry	고속도로 진입
+Highway exit	고속도로 진출
+HUD display setting	HUD 표시 설정
+CLUSTER display setting	계기판 표시 설정
+NAV display setting	길안내 표시 설정
+Auxiliary information	부가정보
+Design	디자인 변경
+Sport mode RPM display	스포츠 모드 RPM 표시
+All modes RPM display	모든 모드 RPM 표시
+All modes Redline also applies in Sport.	모든 모드의 앱 표시는 스포츠에도 적용됩니다.
+Text	텍스트
+Except Sport	스포츠 제외
+Light gray	연한 회색
+White	흰색
+Blue	파란색
+Select items on the next screen. Changes apply only after OK.	다음 화면에서 항목을 고르세요. 확인을 눌러야 저장됩니다.
+Select gauges	게이지 선택
+Select text items	텍스트 항목 선택
+Selection order sets the left and right positions.	선택 순서대로 왼쪽과 오른쪽에 배치합니다.
+OK	확인
+RPM gauge	RPM 게이지
+Gear	기어 단수
+RPM alert	RPM 알림
+RPM number	RPM 수치
+Direction	방향
+Size	크기
+Width	가로
+Height	세로
+Up	위
+Down	아래
+Left	왼쪽
+Right	오른쪽
+Width and height scale together.	가로·세로를 같은 비율로 조절합니다.
+Width / height difference limited to 30%.	가로·세로 배율 차이는 최대 30%입니다.
+G-force	G포스
+Outside temperature	외부 온도
+Oil temperature	오일 온도
+Boost	부스트
+Navigation display	길안내 표시
+Navigation colour	길안내 색상
+Redline app	레드라인 앱
+Outside temp	외부 온도
+Oil temp	오일 온도
+Auxiliary left	부가정보 왼쪽
+Auxiliary right	부가정보 오른쪽
+Gear + circle alert	기어·원형 알림
+M mark	M 마크
+Upper M mark	M 위
+Lower M mark	M 아래
+Hide line	선 안 보임
+Show line	선 보이기
+Hide M mark	M 안 보임
+Show M mark	M 보이기
+Gray	회색
+12 V battery charge	12V 배터리 잔량
+Battery voltage	배터리 전압
+Average fuel economy	평균연비
+Hide selected	선택 항목 안 보임
+Show selected	선택 항목 보이기
+selected	개 선택
+Select items to adjust	조정할 항목을 선택하세요
+Lane guidance	차선 안내
+Stock	순정
+CLUSTER	계기판
+NAV	길안내
+Power	마력
+Torque	토크
+Text / direction	텍스트 / 방향
+Not available	사용 불가
