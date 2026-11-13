@@ -23,7 +23,7 @@
     },
     {
       "id": "seats_easy_access",
-      "version": "0.3.1",
+      "version": "0.3.2",
       "title": "Seats Easy Access",
       "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
       "mguHmi": [
@@ -38,7 +38,7 @@
       "uninstallable": true,
       "build": {
         "python": "seats-easy-access/tools/build.py",
-        "output": "seats-easy-access/dist/USB/mgu-repo/seats-easy-access/seats_easy_access@0.3.1.tgz"
+        "output": "seats-easy-access/dist/USB/mgu-repo/seats-easy-access/seats_easy_access@0.3.2.tgz"
       }
     }
   ]

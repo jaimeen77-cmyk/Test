@@ -2,12 +2,13 @@
 
 2020 BMW G20과 iDrive 7에서 시험하기 위한 시트 앱 저장소입니다. BMW SDK·펌웨어나 IterioDev Comfort 바이너리는 포함하지 않습니다.
 
-## Seats Easy Access 0.3.1
+## Seats Easy Access 0.3.2
 
 실제 시트 그림을 중심으로 운전석과 조수석을 조절하고 메모리와 Easy Access를 사용하는 앱입니다.
 
 - 운전석·조수석 하차 위치 저장
 - 상단 운전석 / 조수석 선택 탭 (선택 좌석은 ● 표시)
+- 조수석 Make room 공간 확보 / 원위치 복귀 (정차 시)
 - 전후·높이·등받이·쿠션·헤드레스트 조절
 - 운전석·조수석 M1~M3 저장과 호출
 - 저장 위치로 수동 시험 이동
@@ -16,7 +17,7 @@
 - 정차 상태, 화면 포커스, 시트 위치 센서 확인
 - 위치 센서가 없는 시트의 저장·이동 버튼 자동 잠금
 
-[한국어 설치·사용 안내](seats-easy-access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.1-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.1.tgz)
+[한국어 설치·사용 안내](seats-easy-access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.2-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.2.tgz)
 
 ## G20 Seat Test 0.1.0
 

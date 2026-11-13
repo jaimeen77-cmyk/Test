@@ -68,6 +68,8 @@ async function run(options) {
         enable('M3', ready && !easy.actionReady(who, true));
         enable('EXIT_SAVE', ready && !easy.actionReady(who, true));
         enable('EXIT_MOVE', ready && state.seats.exit[who] && !easy.actionReady(who, true));
+        text('MAKE_ROOM', state && state.seats.roomOut ? 'Make room · 조수석 원위치 복귀' : 'Make room · 조수석 공간 확보');
+        enable('MAKE_ROOM', ready && who === 'passenger' && !easy.actionReady('passenger', true));
         enable('STOP', easy.foreground && !!state);
     }
     function action(name, handler) {
@@ -89,6 +91,7 @@ async function run(options) {
     action('M1', () => easy.memory(0)); action('M2', () => easy.memory(1)); action('M3', () => easy.memory(2));
     action('EXIT_SAVE', () => easy.save(easy.selectedSeat));
     action('EXIT_MOVE', () => easy.move(easy.selectedSeat));
+    action('MAKE_ROOM', () => easy.makeRoom());
     action('STOP', () => easy.stop());
     easy.on('change', draw);
 

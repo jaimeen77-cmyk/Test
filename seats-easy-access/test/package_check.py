@@ -33,7 +33,7 @@ with tarfile.open(package) as archive:
         assert components[name]['type'] == 'button'
     for name in ['AUTO_TOGGLE', 'SELECT_DRIVER', 'SELECT_PASSENGER', 'SLV_MINUS', 'SLV_PLUS',
                  'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS', 'SNV_MINUS', 'SNV_PLUS',
-                 'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3', 'EXIT_SAVE', 'EXIT_MOVE']:
+                 'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3', 'EXIT_SAVE', 'EXIT_MOVE', 'MAKE_ROOM']:
         assert components[name]['properties']['Enabled']['value'] == 0
     assert b'seat-control.png' in read('rhmiData/uiDescriptions/ID7/uiDescription.json')
     korean = json.loads(read('rhmiData/variantGroups/Common/texts/ko_KR.json'))

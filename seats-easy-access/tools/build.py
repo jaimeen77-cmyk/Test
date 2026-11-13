@@ -18,7 +18,7 @@ from rhmi_layout import build_ui, manifest_for, sid
 
 ROOT = Path(__file__).resolve().parent.parent
 ID = 'seats_easy_access'
-VERSION = '0.3.1'
+VERSION = '0.3.2'
 NS = uuid.UUID('367cc856-ae4d-4aef-b5a3-cd8b1997d25e')
 LANGS = ['en_GB', 'en_US', 'ko_KR', 'de_DE']
 ITEMS = [
@@ -40,6 +40,7 @@ ITEMS = [
     ['button', 'M1', 'M1'], ['button', 'M2', 'M2'], ['button', 'M3', 'M3'],
     ['button', 'EXIT_SAVE', '현재 위치를 하차 위치로 저장'],
     ['button', 'EXIT_MOVE', '하차 위치로 이동'],
+    ['button', 'MAKE_ROOM', 'Make room · 조수석 공간 확보'],
     ['button', 'STOP', 'STOP seat movement'],
     ['text3', 'GUIDE', 'Park before saving or testing. Keep the seat path clear and the physical seat switch within reach.'],
 ]
@@ -107,7 +108,7 @@ def main():
             if component['name'] in ('AUTO_TOGGLE', 'SELECT_DRIVER', 'SELECT_PASSENGER',
                     'SLV_MINUS', 'SLV_PLUS', 'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS',
                     'SNV_MINUS', 'SNV_PLUS', 'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3',
-                    'EXIT_SAVE', 'EXIT_MOVE'):
+                    'EXIT_SAVE', 'EXIT_MOVE', 'MAKE_ROOM'):
                 component.setdefault('properties', {})['Enabled'] = {'value': 0, 'type': 'UInt'}
     pkg_json = {
         'name': ID, 'version': VERSION, 'description': 'Graphical seat controls, memories and Easy Access for iDrive 7',

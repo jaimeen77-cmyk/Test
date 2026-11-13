@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.3.1';
+const VERSION = '0.3.2';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -33,6 +33,7 @@ function stateOf(message) {
             job: seats.job === null ? null : (typeof seats.job === 'string' ? seats.job : 'busy'),
             jobSeat: seats.jobSeat === 'driver' || seats.jobSeat === 'passenger' ? seats.jobSeat : null,
             wheel: seats.wheel === true,
+            roomOut: seats.roomOut === true,
         },
     };
     ['driver', 'passenger'].forEach((who) => {
@@ -48,7 +49,7 @@ function stateOf(message) {
 
 function validCommand(message) {
     if (!message || typeof message !== 'object') return false;
-    if ((message.op === 'get' || message.op === 'stop') && Object.keys(message).length === 1) return true;
+    if ((message.op === 'get' || message.op === 'stop' || message.op === 'gentleman') && Object.keys(message).length === 1) return true;
     if (message.op === 'exit' && (message.seat === 'driver' || message.seat === 'passenger') &&
         typeof message.save === 'boolean' && Object.keys(message).length === 3) return true;
     if (message.op === 'jog' && (message.seat === 'driver' || message.seat === 'passenger') &&
@@ -181,6 +182,17 @@ class EasyAccess extends EventEmitter {
         const blocked = this.actionReady(who, true); if (blocked) throw new Error(blocked);
         return this.request({ op: 'exit', seat: who, save: false },
             (who === 'driver' ? '운전석' : '조수석') + ' Easy Access 이동을 요청했습니다.');
+    }
+    async makeRoom() {
+        const blocked = this.actionReady('passenger', true);
+        if (blocked) throw new Error(blocked);
+        if (this.selectedSeat !== 'passenger') throw new Error('조수석 탭에서 사용하세요.');
+        await this.client.refresh();
+        const recheck = this.actionReady('passenger', true);
+        if (recheck) throw new Error(recheck);
+        const returning = this.state().seats.roomOut;
+        return this.request({ op: 'gentleman' }, returning ?
+            '조수석 원위치 복귀를 요청했습니다.' : '조수석 공간 확보를 요청했습니다.');
     }
     async jog(axis, direction) {
         const who = this.selectedSeat;

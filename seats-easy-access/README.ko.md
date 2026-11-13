@@ -1,4 +1,6 @@
-# Seats Easy Access 0.3.1
+# Seats Easy Access 0.3.2
+
+**Make room:** 조수석 탭에서 공간 확보 버튼을 누르면 Comfort가 조수석을 앞으로 이동하고 등받이를 기울입니다. 공간을 확보한 뒤에는 버튼이 원위치 복귀로 바뀝니다. 정차 상태이며 위치 센서가 있는 조수석에서 사용하세요. 이동 중에는 정지 버튼을 사용합니다.
 
 상단 **운전석 / 조수석** 탭으로 조작할 좌석을 선택합니다. 선택한 탭은 ●로 표시되고, 해당 좌석의 조절·M1~M3·Easy Access가 연결됩니다. 요청 처리 중에는 탭 전환이 잠깁니다.
 
@@ -19,7 +21,7 @@ iDrive 7 화면에서 실제 시트 그림을 보며 운전석과 조수석을 �
 
 ## 설치
 
-`seats-easy-access-0.3.1-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
+`seats-easy-access-0.3.2-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
 
 필수 구성:
 
