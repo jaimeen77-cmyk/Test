@@ -19,15 +19,9 @@
 
 [한국어 설치·사용 안내](seats-easy-access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.2-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.2.tgz)
 
-## G20 Seat Test 0.1.0
-
-빈 조수석의 전후 축을 한 번 짧게 움직여 차량 호환성을 확인하는 보수적인 실험용 앱입니다. 자동 Easy Access와 운전석 이동은 제공하지 않습니다.
-
-[한국어 안내](g20-seat-test/README.ko.md) · [USB 설치 묶음](downloads/g20-seat-test-0.1.0-usb.zip) · [OAP 패키지](downloads/g20_seat_test@0.1.0.tgz)
-
 ## MGU Store 설치
 
-**간편 설치 (HTTPS 카탈로그):** Store → Settings → Add source에 `https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/catalog.json`을 입력하세요. **Seats Easy Access 0.3.0**을 선택해 설치합니다. `IterioDev/car-apps` 소스도 추가해야 Comfort 의존성을 설치할 수 있습니다. 이 방법은 완성된 OAP 패키지를 내려받으므로 차량에서 Python 빌드를 실행하지 않습니다.
+**간편 설치 (HTTPS 카탈로그):** Store → Settings → Add source에 `https://raw.githubusercontent.com/jaimeen77-cmyk/Test/main/catalog.json`을 입력하세요. **Seats Easy Access 0.3.2**를 선택해 설치합니다. `IterioDev/car-apps` 소스도 추가해야 Comfort 의존성을 설치할 수 있습니다. 이 방법은 완성된 OAP 패키지를 내려받으므로 차량에서 Python 빌드를 실행하지 않습니다.
 
 **소스 빌드 (main):** 아래 방법을 사용합니다.
 
