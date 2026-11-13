@@ -17,7 +17,7 @@
 - 정차 상태, 화면 포커스, 시트 위치 센서 확인
 - 위치 센서가 없는 시트의 저장·이동 버튼 자동 잠금
 
-[한국어 설치·사용 안내](apps/seats/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.2-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.2.tgz)
+[한국어 설치·사용 안내](apps/seats_easy_access/README.ko.md) · [USB 설치 묶음](downloads/seats-easy-access-0.3.2-usb.zip) · [OAP 패키지](downloads/seats_easy_access@0.3.2.tgz)
 
 ## MGU Store 설치
 
@@ -43,10 +43,10 @@ GitHub Releases 배포는 아직 제공되지 않습니다. 현재는 위 HTTPS 
 
 ```sh
 python3 kit/tools/build.py --language ko seats_easy_access
-node apps/seats/test/test.js
-python3 apps/seats/test/package_check.py
+node apps/seats_easy_access/test/test.js
+python3 apps/seats_easy_access/test/package_check.py
 ```
 
-소스는 `apps/seats/`에 있으며 공용 빌드 결과는 `dist/`에 생성됩니다. 폴더 이름과 별개로 설치 앱 ID는 기존 `seats_easy_access`를 유지합니다.
+소스는 `apps/seats_easy_access/`에 있으며 공용 빌드 결과는 `dist/`에 생성됩니다. 설치 앱 ID는 `seats_easy_access`입니다.
 
 실차 검증 전까지 실험용으로 취급하세요. 앱의 정지 요청은 물리적인 시트 정지를 보장하지 않으므로 처음 시험할 때는 순정 시트 스위치에 손이 닿는 상태를 유지해야 합니다.

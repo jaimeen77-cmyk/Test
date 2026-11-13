@@ -14,7 +14,7 @@
         "mgu-deploy": "0.7.11"
       },
       "kind": "app",
-      "path": "apps/seats",
+      "path": "apps/seats_easy_access",
       "uninstallable": true,
       "build": {
         "python": "kit/tools/build.py",

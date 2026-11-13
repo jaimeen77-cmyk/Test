@@ -1,7 +1,7 @@
 **/__pycache__/
 *.pyc
 g20-seat-test/dist/
-apps/seats/dist/
+apps/seats_easy_access/dist/
 dist/
 store-release/
 seat-test.log*

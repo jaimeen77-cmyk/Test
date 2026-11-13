@@ -24,12 +24,12 @@ def main():
     entry = {
         'id': APP, 'version': '0.3.2', 'kind': 'app',
         'title': '시트 Easy Access', 'description': '시트 조절·메모리·승하차 편의·조수석 공간 확보',
-        'path': 'apps/seats', 'mguHmi': ['ID7'], 'uninstallable': True,
+        'path': 'apps/seats_easy_access', 'mguHmi': ['ID7'], 'uninstallable': True,
         'requires': {'iteriodev-comfort': '0.5.1', 'mgu-deploy': '0.7.11'},
         'build': {'python': 'kit/tools/build.py', 'args': ['--language', 'ko', APP],
                   'output': 'dist/seats_easy_access@0.3.2.tgz'},
     }
-    source = ROOT / 'apps/seats'
+    source = ROOT / 'apps/seats_easy_access'
     files = {}
     for file in source.rglob('*'):
         relative = file.relative_to(source)
@@ -39,7 +39,7 @@ def main():
         if relative.as_posix() == 'tools/build.py':
             content = content.replace(b"LANGS = ['en_GB', 'en_US', 'ko_KR', 'de_DE']", b"LANGS = ['ko_KR']")
             content = content.replace(b"'defaultLanguage': 'en_GB'", b"'defaultLanguage': 'ko_KR'")
-        files[target / 'apps/seats' / relative] = content
+        files[target / 'apps/seats_easy_access' / relative] = content
     files[target / 'kit/tools/build.py'] = (ROOT / 'kit/tools/build.py').read_bytes()
     conflicts = [str(p) for p, content in files.items()
                  if p.exists() and (not p.is_file() or p.read_bytes() != content)]
