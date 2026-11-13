@@ -35,12 +35,13 @@ def main():
         elif app == 'cluster_redline':
             files.extend(p.relative_to(HERE) for p in (HERE / 'tests/cluster_redline').glob('*.js'))
     files += [Path('tools') / p for p in ('cluster-redline-preview.js', 'cluster-redline-preflight.js',
-                                       'cluster-redline-settings-preview.js', 'collect-cluster-redline.ps1', 'collect-redline-install.ps1', 'install-overlay.py', 'upstream-integration.py')]
+                                       'cluster-redline-settings-preview.js', 'collect-cluster-redline.ps1', 'collect-redline-install.ps1', 'collect-seats.js', 'collect-seats.ps1', 'install-overlay.py', 'upstream-integration.py')]
     files += [Path('tests') / p for p in ('metadata.test.js', 'standard-installer.test.py',
                                        'standard-kit.test.py', 'overlay.test.py', 'collect-cluster-redline.test.py', 'collect-redline-install.test.py', 'cluster-redline-manifest.test.py', 'hud-slot-request.test.py', 'cluster-slot-takeover.test.py', 'native-hud-guidance.test.py', 'native-cluster-recovery.test.py', 'optional-guidance.test.py', 'optional-auxiliary.test.py', 'optional-lanes.test.py')]
     files += [Path(p) for p in (
         'docs/JAM-INTEGRATION.ko.md',
         'docs/VALIDATION.ko.md',
+        'docs/SEATS-DIAGNOSTICS.ko.md',
         'docs/CLUSTER-REDLINE.ko.md',
         'docs/CLUSTER-REDLINE-HISTORY.ko.md',
         'docs/CLUSTER-REDLINE.md',
@@ -59,7 +60,8 @@ def main():
     if selected == ['seats_easy_access']:
         files = [p for p in files if p.parts[:2] == ('apps', 'seats_easy_access')]
         files += [Path(p) for p in ('tools/install-overlay.py', 'tools/upstream-integration.py',
-                                   'docs/SEATS-OVERLAY.ko.md', 'localization/ko-additions.tsv')]
+                                   'tools/collect-seats.js', 'tools/collect-seats.ps1',
+                                   'docs/SEATS-DIAGNOSTICS.ko.md', 'docs/SEATS-OVERLAY.ko.md', 'localization/ko-additions.tsv')]
     conflicts = [str(p) for p in files if (target / p).exists() and
                  ((target / p).is_dir() or (target / p).read_bytes() != (HERE / p).read_bytes())]
     if conflicts and not args.force:

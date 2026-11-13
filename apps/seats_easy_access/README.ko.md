@@ -63,3 +63,7 @@ python3 kit/tools/make_kit.py seats_easy_access
 ```
 
 이 앱은 공개된 Comfort JSON 프로토콜을 사용하는 독립 클라이언트입니다. IterioDev 소스나 바이너리를 포함하거나 수정하지 않습니다.
+
+## 하차 후 원위치로 복귀하지 않을 때
+
+원래 위치를 다시 저장하기 전에 [복귀 진단 안내](../../docs/SEATS-DIAGNOSTICS.ko.md)의 조회 전용 수집기로 한 번 재현해 기록하세요. 자동 복귀는 Comfort가 담당하며, 문·전원·착좌·정차 판정과 Seats 화면 종료 시각을 비교해야 합니다.
