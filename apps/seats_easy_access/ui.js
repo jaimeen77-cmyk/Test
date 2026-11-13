@@ -1,8 +1,10 @@
 'use strict';
 const { ComfortClient, EasyAccess, VERSION, bounded } = require('./core');
+const { translator } = require('./i18n');
 
 async function run(options) {
     const opts = options || {}, sdk = opts.sdk || require('oap-sdk');
+    const translate = translator(opts.language);
     const app = new sdk.OnlineApp();
     const client = opts.client || new ComfortClient();
     const easy = new EasyAccess(client);
@@ -23,7 +25,7 @@ async function run(options) {
     const comp = (name) => rhmi.getByName(name);
     const cache = {};
     function text(name, value, cell) {
-        const c = comp(name), key = name + ':' + (cell || 'Text'), string = String(value);
+        const c = comp(name), key = name + ':' + (cell || 'Text'), string = translate(value);
         if (!c || cache[key] === string) return;
         cache[key] = string;
         Promise.resolve(c.setValue(0, cell || 'Text', string, 'Text')).catch(() => { delete cache[key]; });

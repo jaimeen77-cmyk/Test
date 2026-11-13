@@ -3,24 +3,79 @@
   "components": [
     {
       "id": "seats_easy_access",
-      "version": "0.4.0",
-      "title": "Seats Easy Access",
-      "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
+      "version": "0.5.0",
+      "kind": "app",
+      "title": "Seats Easy Access (English)",
+      "description": "Seat controls, memories, Easy Access and passenger Make room",
+      "path": "apps/seats_easy_access",
       "mguHmi": [
         "ID7"
       ],
+      "uninstallable": true,
       "requires": {
         "iteriodev-comfort": "0.5.1",
         "mgu-deploy": "0.7.11"
       },
-      "kind": "app",
-      "path": "apps/seats_easy_access",
-      "uninstallable": true,
       "build": {
         "node": "tools/store-build.js",
-        "args": ["--template", "seats_easy_access", "--id", "{id}", "--version", "{version}", "--dir", "{dir}", "--language", "ko"],
+        "args": [
+          "--template",
+          "seats_easy_access",
+          "--id",
+          "{id}",
+          "--version",
+          "{version}",
+          "--dir",
+          "{dir}",
+          "--language",
+          "en"
+        ],
         "network": false,
-        "shared": ["store/runtime", "tools/store-build.js", "localization/ko-additions.tsv"]
+        "shared": [
+          "store/runtime",
+          "tools/store-build.js",
+          "localization/ko-additions.tsv"
+        ]
+      }
+    },
+    {
+      "id": "seats_easy_access_ko",
+      "version": "0.5.0",
+      "kind": "app",
+      "title": "시트 Easy Access (한국어)",
+      "description": "시트 조절·메모리·승하차 편의·조수석 공간 확보",
+      "path": "store/apps/seats_easy_access_ko",
+      "mguHmi": [
+        "ID7"
+      ],
+      "uninstallable": true,
+      "requires": {
+        "iteriodev-comfort": "0.5.1",
+        "mgu-deploy": "0.7.11"
+      },
+      "build": {
+        "node": "tools/store-build.js",
+        "args": [
+          "--template",
+          "seats_easy_access",
+          "--id",
+          "{id}",
+          "--version",
+          "{version}",
+          "--dir",
+          "{dir}",
+          "--language",
+          "ko",
+          "--source",
+          "apps/seats_easy_access"
+        ],
+        "network": false,
+        "shared": [
+          "store/runtime",
+          "tools/store-build.js",
+          "localization/ko-additions.tsv",
+          "apps/seats_easy_access"
+        ]
       }
     }
   ]

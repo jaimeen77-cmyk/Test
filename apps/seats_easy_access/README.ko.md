@@ -1,4 +1,6 @@
-# Seats Easy Access 0.4.0
+# Seats Easy Access 0.5.0
+
+기본 언어는 영어입니다. 공용 빌드에서 `--language ko`를 지정하면 메뉴·상태·오류 안내를 한국어로 표시합니다. Store에서도 English/한국어 항목을 따로 선택할 수 있습니다.
 
 **Make room:** 조수석 탭에서 공간 확보 버튼을 누르면 Comfort가 조수석을 앞으로 이동하고 등받이를 기울입니다. 공간을 확보한 뒤에는 버튼이 원위치 복귀로 바뀝니다. 정차 상태이며 위치 센서가 있는 조수석에서 사용하세요. 이동 중에는 정지 버튼을 사용합니다.
 
@@ -52,9 +54,10 @@ Comfort는 이 저장소나 설치 파일에 포함하지 않습니다. `IterioD
 ## 개발
 
 ```sh
-python3 kit/tools/build.py --language ko seats_easy_access
+python3 kit/tools/build.py seats_easy_access
 node apps/seats_easy_access/test/test.js
-python3 kit/tools/make_kit.py seats_easy_access --language ko
+python3 kit/tools/make_kit.py seats_easy_access
+# 한국어: python3 kit/tools/make_kit.py seats_easy_access --language ko
 ```
 
 이 앱은 공개된 Comfort JSON 프로토콜을 사용하는 독립 클라이언트입니다. IterioDev 소스나 바이너리를 포함하거나 수정하지 않습니다.

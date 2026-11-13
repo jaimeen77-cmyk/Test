@@ -84,9 +84,10 @@ def main():
     if not args.no_ko:
         additions = dict(line.split('\t', 1) for line in (HERE / 'localization/ko-additions.tsv').read_text(encoding='utf-8').splitlines()
                          if line and not line.startswith('#') and '\t' in line)
-        if 'storage' in selected:
-            # Storage keeps its Korean strings in app.json; the upstream build reads only the catalog.
-            additions.update(json.loads((HERE / 'apps/storage/app.json').read_text(encoding='utf-8'))['translations']['ko'])
+        for app in selected:
+            # Apps can keep Korean additions beside their normal English source spec.
+            additions.update(json.loads((HERE / 'apps' / app / 'app.json').read_text(encoding='utf-8'))
+                             .get('translations', {}).get('ko', {}))
         words = json.loads(ko.read_text(encoding='utf-8'))
         words.update(additions)
         tsv = target / 'kit/runtime/locales/ko.tsv'
@@ -98,8 +99,8 @@ def main():
         ko.write_text(json.dumps(words, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print('Installed source overlay:', ', '.join(selected))
     print('Use normal commands in the target folder:')
-    print('  python kit/tools/build.py --language ko --preview-only ' + ' '.join(selected))
-    print('  python kit/tools/make_kit.py --language ko  # all apps')
+    print('  python kit/tools/build.py --preview-only ' + ' '.join(selected))
+    print('  python kit/tools/make_kit.py  # all apps, English by default; add --language ko for Korean')
     print('  deploy/push-to-car.ps1 or deploy/push-to-car.sh check / install')
 
 

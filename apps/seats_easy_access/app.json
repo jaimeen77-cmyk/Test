@@ -1,8 +1,8 @@
 {
   "id": "seats_easy_access",
-  "version": "0.4.0",
-  "title": "시트 Easy Access",
-  "description": "시트 조절·메모리·승하차 편의·조수석 공간 확보",
+  "version": "0.5.0",
+  "title": "Seats Easy Access",
+  "description": "Seat controls, memories, Easy Access and passenger Make room",
   "vendor": "custom",
   "loggingId": "SEAT",
   "iconGlyph": "S",
@@ -10,6 +10,7 @@
     "ID7"
   ],
   "supportedLanguages": [
+    "en",
     "ko"
   ],
   "signals": {},
@@ -20,15 +21,15 @@
     {
       "name": "MAIN",
       "kind": "list",
-      "title": "시트 Easy Access",
+      "title": "Seats Easy Access",
       "tabs": [
         [
           "SELECT_DRIVER",
-          "운전석"
+          "Driver"
         ],
         [
           "SELECT_PASSENGER",
-          "조수석"
+          "Passenger"
         ]
       ],
       "items": [
@@ -40,42 +41,42 @@
         [
           "text3",
           "STATUS",
-          "Comfort 상태를 먼저 확인하세요."
+          "Refresh Comfort status first."
         ],
         [
           "twocol",
           "SELECTED",
-          "선택 시트"
+          "Selected seat"
         ],
         [
           "twocol",
           "AUTO",
-          "자동 Easy Access"
+          "Automatic Easy Access"
         ],
         [
           "twocol",
           "DRIVER",
-          "운전석"
+          "Driver"
         ],
         [
           "twocol",
           "PASSENGER",
-          "조수석"
+          "Passenger"
         ],
         [
           "twocol",
           "VEHICLE",
-          "차량 상태"
+          "Vehicle status"
         ],
         [
           "button",
           "REFRESH",
-          "상태 새로 확인"
+          "Refresh status"
         ],
         [
           "button",
           "AUTO_TOGGLE",
-          "자동 Easy Access 켜기 / 끄기"
+          "Toggle automatic Easy Access"
         ],
         [
           "button",
@@ -90,47 +91,47 @@
         [
           "button",
           "SHV_MINUS",
-          "높이 ▼"
+          "Height ▼"
         ],
         [
           "button",
           "SHV_PLUS",
-          "높이 ▲"
+          "Height ▲"
         ],
         [
           "button",
           "LNV_MINUS",
-          "등받이 ◀"
+          "Backrest ◀"
         ],
         [
           "button",
           "LNV_PLUS",
-          "등받이 ▶"
+          "Backrest ▶"
         ],
         [
           "button",
           "SNV_MINUS",
-          "쿠션 ▼"
+          "Cushion ▼"
         ],
         [
           "button",
           "SNV_PLUS",
-          "쿠션 ▲"
+          "Cushion ▲"
         ],
         [
           "button",
           "KHV_MINUS",
-          "헤드레스트 ▼"
+          "Headrest ▼"
         ],
         [
           "button",
           "KHV_PLUS",
-          "헤드레스트 ▲"
+          "Headrest ▲"
         ],
         [
           "button",
           "MEMORY_SAVE",
-          "메모리 저장"
+          "Save memory"
         ],
         [
           "button",
@@ -150,27 +151,27 @@
         [
           "button",
           "EXIT_SAVE",
-          "현재 위치를 하차 위치로 저장"
+          "Save current exit position"
         ],
         [
           "button",
           "EXIT_MOVE",
-          "하차 위치로 이동"
+          "Move to exit position"
         ],
         [
           "button",
           "MAKE_ROOM",
-          "Make room · 조수석 공간 확보"
+          "Make room · Move passenger seat forward"
         ],
         [
           "button",
           "STOP",
-          "시트 이동 정지"
+          "Stop seat movement"
         ],
         [
           "text3",
           "GUIDE",
-          "저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요."
+          "Save and test while stationary. Keep the path clear and the physical seat switch within reach."
         ]
       ]
     }
@@ -178,5 +179,33 @@
   "requires": {
     "iteriodev-comfort": "0.5.1",
     "mgu-deploy": "0.7.11"
+  },
+  "storeDefaultLanguage": "en",
+  "translations": {
+    "ko": {
+      "Seats Easy Access": "시트 Easy Access",
+      "Driver": "운전석",
+      "Passenger": "조수석",
+      "Refresh Comfort status first.": "Comfort 상태를 먼저 확인하세요.",
+      "Selected seat": "선택 시트",
+      "Automatic Easy Access": "자동 Easy Access",
+      "Vehicle status": "차량 상태",
+      "Refresh status": "상태 새로 확인",
+      "Toggle automatic Easy Access": "자동 Easy Access 켜기 / 끄기",
+      "Height ▼": "높이 ▼",
+      "Height ▲": "높이 ▲",
+      "Backrest ◀": "등받이 ◀",
+      "Backrest ▶": "등받이 ▶",
+      "Cushion ▼": "쿠션 ▼",
+      "Cushion ▲": "쿠션 ▲",
+      "Headrest ▼": "헤드레스트 ▼",
+      "Headrest ▲": "헤드레스트 ▲",
+      "Save memory": "메모리 저장",
+      "Save current exit position": "현재 위치를 하차 위치로 저장",
+      "Move to exit position": "하차 위치로 이동",
+      "Make room · Move passenger seat forward": "Make room · 조수석 공간 확보",
+      "Stop seat movement": "시트 이동 정지",
+      "Save and test while stationary. Keep the path clear and the physical seat switch within reach.": "저장과 시험은 정차 상태에서 하세요. 이동 경로를 비우고 순정 시트 스위치에 손이 닿게 하세요."
+    }
   }
 }

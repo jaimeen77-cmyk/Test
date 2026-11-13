@@ -76,8 +76,8 @@ function filterOptionalProxies(manifest, catalog, optional) {
 }
 function build(options) {
     const template = options.template, id = options.id, version = options.version;
-    const language = options.language || 'ko';
-    if (['ko', 'en'].indexOf(language) < 0) throw new Error('Language must be ko or en');
+    let language = options.language;
+    if (language && ['ko', 'en'].indexOf(language) < 0) throw new Error('Language must be ko or en');
     if (!ID.test(template || '') || !ID.test(id || '') || !VERSION.test(version || '')) throw new Error('Valid --template, --id and numeric --version are required');
     const appDir = path.resolve(ROOT, options.dir || '');
     if (appDir.indexOf(ROOT + path.sep) !== 0) throw new Error('App directory must be inside the repository');
@@ -87,6 +87,7 @@ function build(options) {
     if (sourceDir.indexOf(ROOT + path.sep) !== 0) throw new Error('Source directory must be inside the repository');
     const sourceSpec = JSON.parse(fs.readFileSync(path.join(sourceDir, 'app.json'), 'utf8'));
     if (sourceSpec.version !== version || (options.source && sourceSpec.id !== template)) throw new Error('Language variant must match the current source id/version');
+    language = language || sourceSpec.storeDefaultLanguage || 'ko';
     const runtime = template + (language === 'en' ? '.en' : '');
     const metadata = JSON.parse(fs.readFileSync(path.join(ROOT, 'store/runtime', runtime + '.json'), 'utf8'));
     if (metadata.id !== template || metadata.language !== language || metadata.ui_sha256 !== fingerprint(sourceSpec, template)) {

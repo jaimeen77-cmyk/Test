@@ -102,10 +102,11 @@ def main():
                 metadata['parts'].append(name)
             (destination / (runtime + '.json')).write_text(json.dumps(metadata, indent=2) + '\n', encoding='utf-8')
             # Small Store manifests only; app logic remains in apps/<original-id>.
-            if not spec.get('supportedLanguages') or 'en' in spec['supportedLanguages']:
-                variant = ROOT / 'store/apps' / (app_id + '_en')
+            variant_language = 'ko' if spec.get('storeDefaultLanguage') == 'en' else 'en'
+            if not spec.get('supportedLanguages') or variant_language in spec['supportedLanguages']:
+                variant = ROOT / 'store/apps' / (app_id + '_' + variant_language)
                 variant.mkdir(parents=True, exist_ok=True)
-                (variant / 'app.json').write_text(json.dumps(dict(id=app_id + '_en', version=spec['version']), indent=2) + '\n', encoding='utf-8')
+                (variant / 'app.json').write_text(json.dumps(dict(id=app_id + '_' + variant_language, version=spec['version']), indent=2) + '\n', encoding='utf-8')
                 shutil.copy2(app_dir / 'icon.png', variant / 'icon.png')
             print(app_id + ': ' + str(len(data)) + ' bytes; no SDK or app JavaScript in runtime template')
 

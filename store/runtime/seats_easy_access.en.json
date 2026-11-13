@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "seats_easy_access",
+  "language": "en",
+  "source_version": "0.5.0",
+  "ui_sha256": "97b8831ea63a5b5c187f59bbbf02fc55aa688f93f49843f40827eb2ab87e7953",
+  "size": 1488843,
+  "sha256": "6cadf9de590721b65cbc9bd47b8845015eda76df80163001d9a7e579b62d759e",
+  "parts": [
+    "seats_easy_access.en.tgz.part-00",
+    "seats_easy_access.en.tgz.part-01",
+    "seats_easy_access.en.tgz.part-02",
+    "seats_easy_access.en.tgz.part-03",
+    "seats_easy_access.en.tgz.part-04",
+    "seats_easy_access.en.tgz.part-05",
+    "seats_easy_access.en.tgz.part-06",
+    "seats_easy_access.en.tgz.part-07"
+  ]
+}
