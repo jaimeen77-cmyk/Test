@@ -25,7 +25,7 @@
     {
       "id": "seats_easy_access",
       "kind": "app",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "title": "Seats Easy Access",
       "description": "Graphical seat controls, memories and Easy Access for iDrive 7.",
       "mguHmi": [
@@ -37,10 +37,10 @@
         "mgu-deploy": "0.7.11"
       },
       "artifact": {
-        "name": "seats_easy_access@0.3.0.tgz",
-        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/test/main/downloads/seats_easy_access@0.3.0.tgz",
-        "size": 278714,
-        "sha256": "fb1f5cc4e4499c0da81349d5ec8f2508c8bc50c541beaa0a5b3e07003cdf3644"
+        "name": "seats_easy_access@0.3.1.tgz",
+        "url": "https://raw.githubusercontent.com/jaimeen77-cmyk/test/main/downloads/seats_easy_access@0.3.1.tgz",
+        "size": 278780,
+        "sha256": "a0b68290b2171a2dacd9b955db4ebe7f0925c7e4df176229fd412f110fb0711e"
       }
     }
   ]

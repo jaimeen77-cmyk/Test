@@ -198,6 +198,9 @@ def build_ui(spec, language='en'):
             x.append(f'        <property id="9" value="{main_id}"/>')
             cont['properties'] = {'ParentState': {'value': main_id, 'type': 'UInt'}}
         groups = []
+        if scr.get('tabs'):
+            tabs = [comp('barbutton', tab[0], rows=[text_row(tab[0], tab[1])]) for tab in scr['tabs']]
+            groups.append(('Bar', tabs))
         if kind == 'canvas':
             items = []
             gid, gx, gc = comp('graphic', scr.get('graphic', scr['name'] + '_GFX'), rows=[{'Graphic': {'value': '', 'type': 'Text'}}])

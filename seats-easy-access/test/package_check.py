@@ -26,6 +26,11 @@ with tarfile.open(package) as archive:
     ET.fromstring(read('rhmiData/uiDescriptions/ID7/application.xml'))
     ui = json.loads(read('rhmiData/uiDescriptions/ID7/uiDescription.json'))
     components = {c['name']: c for state in ui['containers'].values() for c in state['components'].values()}
+    xml = ET.fromstring(read('rhmiData/uiDescriptions/ID7/application.xml'))
+    bar = xml.find(".//layoutGroup[@name='Bar']")
+    assert bar is not None and len(bar.findall('component')) == 2
+    for name in ['SELECT_DRIVER', 'SELECT_PASSENGER']:
+        assert components[name]['type'] == 'button'
     for name in ['AUTO_TOGGLE', 'SELECT_DRIVER', 'SELECT_PASSENGER', 'SLV_MINUS', 'SLV_PLUS',
                  'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS', 'SNV_MINUS', 'SNV_PLUS',
                  'KHV_MINUS', 'KHV_PLUS', 'MEMORY_SAVE', 'M1', 'M2', 'M3', 'EXIT_SAVE', 'EXIT_MOVE']:

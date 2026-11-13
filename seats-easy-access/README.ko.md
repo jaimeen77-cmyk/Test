@@ -1,4 +1,6 @@
-# Seats Easy Access 0.3.0
+# Seats Easy Access 0.3.1
+
+상단 **운전석 / 조수석** 탭으로 조작할 좌석을 선택합니다. 선택한 탭은 ●로 표시되고, 해당 좌석의 조절·M1~M3·Easy Access가 연결됩니다. 요청 처리 중에는 탭 전환이 잠깁니다.
 
 iDrive 7 화면에서 실제 시트 그림을 보며 운전석과 조수석을 조절하고, 메모리와 Easy Access를 사용하는 앱입니다. 실제 시트 제어와 문·시동·착좌 조건 판단은 별도로 설치된 **IterioDev Comfort 0.5.1 이상**이 담당합니다.
 
@@ -17,7 +19,7 @@ iDrive 7 화면에서 실제 시트 그림을 보며 운전석과 조수석을 �
 
 ## 설치
 
-`seats-easy-access-0.3.0-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
+`seats-easy-access-0.3.1-usb.zip`을 풀고 `mgu-repo` 폴더를 USB 최상위에 복사한 뒤 MGU Store의 USB 페이지에서 설치합니다.
 
 필수 구성:
 

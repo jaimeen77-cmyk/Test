@@ -47,14 +47,16 @@ async function run(options) {
         const axes = state ? state.seats.axes[who] : [];
         text('STATUS', easy.message);
         text('SELECTED', who === 'driver' ? '운전석' : '조수석', 'Text2ndCol');
+        text('SELECT_DRIVER', who === 'driver' ? '● 운전석' : '운전석');
+        text('SELECT_PASSENGER', who === 'passenger' ? '● 조수석' : '조수석');
         text('AUTO', state ? (state.settings.easyExit ? '켜짐' : '꺼짐') : '확인 필요', 'Text2ndCol');
         text('DRIVER', seatText('driver'), 'Text2ndCol');
         text('PASSENGER', seatText('passenger'), 'Text2ndCol');
         text('VEHICLE', state ? (state.parked ? '정차' : '주행 중') + (moving ? ' · 시트 이동 중' : '') : '알 수 없음', 'Text2ndCol');
         const ready = easy.foreground && !!state && !easy.pending;
         enable('REFRESH', easy.foreground && !easy.pending);
-        enable('SELECT_DRIVER', ready && who !== 'driver');
-        enable('SELECT_PASSENGER', ready && who !== 'passenger');
+        enable('SELECT_DRIVER', easy.foreground && !easy.pending && !easy.moving);
+        enable('SELECT_PASSENGER', easy.foreground && !easy.pending && !easy.moving);
         enable('AUTO_TOGGLE', ready);
         ['SLV_MINUS', 'SLV_PLUS', 'SHV_MINUS', 'SHV_PLUS', 'LNV_MINUS', 'LNV_PLUS',
             'SNV_MINUS', 'SNV_PLUS', 'KHV_MINUS', 'KHV_PLUS'].forEach((name) => {

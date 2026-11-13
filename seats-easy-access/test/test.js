@@ -36,6 +36,12 @@ class FakeClient extends EventEmitter {
 
     const client = new FakeClient(), easy = new EasyAccess(client);
     easy.setForeground(true);
+    easy.selectSeat('passenger');
+    assert.equal(easy.selectedSeat, 'passenger');
+    easy.pending = true;
+    assert.throws(() => easy.selectSeat('driver'), /요청/);
+    easy.pending = false;
+    easy.selectSeat('driver');
     await easy.refresh();
     await easy.save('driver');
     assert.equal(client.state.seats.exit.driver, true);

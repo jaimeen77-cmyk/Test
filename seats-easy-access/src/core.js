@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.3.0';
+const VERSION = '0.3.1';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -132,6 +132,7 @@ class EasyAccess extends EventEmitter {
     state() { return this.client.state; }
     selectSeat(who) {
         if (who !== 'driver' && who !== 'passenger') throw new Error('지원하지 않는 시트입니다.');
+        if (this.pending || this.moving) throw new Error('시트 요청이 끝난 뒤 좌석을 변경하세요.');
         this.selectedSeat = who; this.saveMemory = false;
         this.message = who === 'driver' ? '운전석을 선택했습니다.' : '조수석을 선택했습니다.';
         this.emit('change');

@@ -18,15 +18,13 @@ from rhmi_layout import build_ui, manifest_for, sid
 
 ROOT = Path(__file__).resolve().parent.parent
 ID = 'seats_easy_access'
-VERSION = '0.3.0'
+VERSION = '0.3.1'
 NS = uuid.UUID('367cc856-ae4d-4aef-b5a3-cd8b1997d25e')
 LANGS = ['en_GB', 'en_US', 'ko_KR', 'de_DE']
 ITEMS = [
     ['graphic', 'SEAT_GFX', 'seat-control.png'],
     ['text3', 'STATUS', 'Refresh the Comfort status first.'],
     ['twocol', 'SELECTED', 'Selected seat'],
-    ['button', 'SELECT_DRIVER', 'Driver seat'],
-    ['button', 'SELECT_PASSENGER', 'Passenger seat'],
     ['twocol', 'AUTO', 'Automatic Easy Access'],
     ['twocol', 'DRIVER', 'Driver seat'],
     ['twocol', 'PASSENGER', 'Passenger seat'],
@@ -99,7 +97,8 @@ def main():
     pkg = dist / 'staged'
     pkg.mkdir(parents=True)
     spec = {'id': ID, 'version': VERSION, 'title': 'Seats Easy Access', 'screens': [
-        {'name': 'MAIN', 'kind': 'list', 'title': 'Seats Easy Access', 'items': ITEMS}],
+        {'name': 'MAIN', 'kind': 'list', 'title': 'Seats Easy Access', 'items': ITEMS,
+         'tabs': [['SELECT_DRIVER', '운전석'], ['SELECT_PASSENGER', '조수석']]}],
         'signals': {}}
     xml, ui, strings, _ = build_ui(spec)
     # Disabled in the installed resources as well as in the runtime policy.
@@ -162,7 +161,7 @@ def main():
     }]})
     shutil.copy(ROOT / 'README.ko.md', dist / 'USB/README.ko.md')
     (dist / 'USB/SHA256SUMS.txt').write_text(digest + '  mgu-repo/seats-easy-access/' + package.name + '\n')
-    zip_path = dist / 'seats-easy-access-0.3.0-usb.zip'
+    zip_path = dist / ('seats-easy-access-' + VERSION + '-usb.zip')
     with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as z:
         for file in sorted((dist / 'USB').rglob('*')):
             if file.is_file(): z.write(file, file.relative_to(dist / 'USB'))
