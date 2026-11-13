@@ -103,8 +103,8 @@ class ComfortLog {
     }
     source() { return this.journal && this.fromJournal.length ? 'journal' : 'status'; }
     /** The newest n lines, oldest first; tr translates the app's own words (the journal's are Comfort's). */
-    lines(n, tr) {
-        if (this.source() === 'journal') return this.fromJournal.slice(-n);
+    lines(n, tr, appOnly) {
+        if (!appOnly && this.source() === 'journal') return this.fromJournal.slice(-n);
         const t = tr || ((v) => v);
         return this.events.slice(-n).map((e) => clock(e.at) + ' ' + e.parts.filter(Boolean)
             .map((v) => t(v === 'driver' ? '운전석' : v === 'passenger' ? '조수석' : v)).join(' · '));

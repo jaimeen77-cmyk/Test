@@ -1,26 +1,21 @@
 'use strict';
-const fs = require('fs');
-const path = require('path');
-const { ComfortClient, EasyAccess, ownMoves, VERSION } = require('./core');
+const { EasyAccess, ownMoves, VERSION } = require('./core');
 const LogPage = require('./log-page');
-const { DemoClient } = require('./demo');
 const { translator } = require('./i18n');
 const { t } = require('./kit/i18n');
 const { makeLayer } = require('./kit/record');
 const G = require('./kit/gauges');
 const BG = require('./bg');
 const seat = require('./seat-image');
-const { ComfortLog } = require('./comfort-log');
+const Runtime = require('./runtime');
 // the HMI's back arrow column (x 0..84 of the 1920 px screen): the photo starts right of it, where the menu does
 const HMI_LEFT = 84, TAB_BAR = 38;
 
 async function start(ctx, options) {
     const opts = options || {}, translate = translator(opts.language), tr = (value) => translate(t(value));
-    const demo = opts.demo === undefined ? !fs.existsSync('/etc/oap/someip/someip-interfaces.json') : opts.demo;
-    const client = opts.client || (demo ? new DemoClient() : new ComfortClient());
+    const runtime = ctx.background || Runtime.start(ctx, opts);
+    const { client, comfortLog, auto, demo } = runtime;
     const moves = ownMoves(client);
-    const comfortLog = new ComfortLog(client, { journal: !demo, size: 120,
-        file: !demo && ctx.dataDir ? path.join(ctx.dataDir, 'seats-diagnostics.json') : null });
     const easy = new EasyAccess(client);
     // Native/Iterio renderers do not accept the upstream OP_IMAGE upload.
     // Cache the photo as gradient columns, as Storage does for its background.
@@ -44,7 +39,8 @@ async function start(ctx, options) {
     });
     let axis = 'SLV', last = '', rendering = null, closed = false, page = 0;
     let paused = false, frozen = [], logPage = 0, logPages = 1, statusAt = 0, statusReading = false;
-    function hold() { frozen = comfortLog.lines(120, tr).slice(); paused = true; }
+    let appLogs = auto.enabled();
+    function hold() { frozen = comfortLog.lines(120, tr, appLogs).slice(); paused = true; }
     const axes = ['SLV', 'SHV', 'LNV', 'SNV', 'KHV'];
     const labels = { SLV: ['◀', '▶', 'Fore / aft'], SHV: ['▼', '▲', 'Height'],
         LNV: ['◀', '▶', 'Backrest'], SNV: ['▼', '▲', 'Cushion'], KHV: ['▼', '▲', 'Headrest'] };
@@ -66,9 +62,18 @@ async function start(ctx, options) {
         axis = list[(list.indexOf(axis) + 1) % list.length] || 'SLV';
     }
     const actions = {
+        BTN_IGNITION_M1: () => {
+            const on = !auto.enabled();
+            runtime.settings.set('ignitionM1', on);
+            runtime.settings.set('m1OffSeen', false);
+            appLogs = true;
+            auto.cancel('M1 cancelled: option changed');
+            comfortLog.add([on ? 'Ignition M1 enabled: next power cycle' : 'Ignition M1 disabled']);
+        },
         BTN_DRIVER: () => { easy.selectSeat('driver'); page = 0; },
         BTN_PASSENGER: () => { easy.selectSeat('passenger'); page = 1; },
         BTN_LOGS: () => { page = 2; },
+        BTN_LOG_SOURCE: () => { appLogs = !appLogs; paused = false; logPage = 0; },
         BTN_LOG_HOLD: () => { if (paused) { paused = false; logPage = 0; } else hold(); },
         BTN_LOG_OLDER: () => { if (!paused) hold(); logPage = Math.min(logPage + 1, logPages - 1); },
         BTN_LOG_NEWER: () => { logPage = Math.max(0, logPage - 1); },
@@ -81,6 +86,10 @@ async function start(ctx, options) {
         BTN_ROOM: () => easy.makeRoom(), BTN_STOP: () => easy.stop(),
     };
     Object.keys(actions).forEach((id) => {
+        const fn = actions[id];
+        if (/^BTN_(MINUS|PLUS|SAVE|M[123]|EXIT|EXIT_SAVE|ROOM|STOP)$/.test(id)) actions[id] = () => {
+            auto.cancel('M1 cancelled: manual control'); return fn();
+        };
         ctx.ui.onClick(id, () => act(actions[id]));
         if (ctx.hideButton) ctx.hideButton(id);
     });
@@ -88,8 +97,8 @@ async function start(ctx, options) {
         if (closed) return Promise.resolve();
         if (rendering) return rendering;
         const state = client.state, who = easy.selectedSeat;
-        const logLines = page === 2 ? (paused ? frozen : comfortLog.lines(120, tr)) : comfortLog.lines(4, tr);
-        const signature = JSON.stringify([state, client.at, who, easy.message, easy.pending, easy.foreground, easy.saveMemory, axis, logLines, page, paused, logPage, comfortLog.source()]);
+        const logLines = page === 2 ? (paused ? frozen : comfortLog.lines(120, tr, appLogs)) : comfortLog.lines(4, tr, auto.enabled());
+        const signature = JSON.stringify([state, client.at, who, easy.message, easy.pending, easy.foreground, easy.saveMemory, axis, logLines, page, paused, logPage, comfortLog.source(), auto.enabled(), appLogs]);
         if (!force && signature === last) return Promise.resolve();
         last = signature;
         const cv = ctx.canvas(1600, 520).clear('#11161c');
@@ -97,7 +106,7 @@ async function start(ctx, options) {
         const frame = () => G.frame(cv, theme, [tr('운전석'), tr('조수석'), tr('Logs')], page,
             demo ? [{ text: tr('PREVIEW'), color: '#f3bc56' }] : []);
         if (page === 2) {
-            logPages = LogPage.draw(cv, { state, at: client.at, version: VERSION, source: comfortLog.source(),
+            logPages = LogPage.draw(cv, { state, at: client.at, version: VERSION, source: appLogs ? 'app' : comfortLog.source(),
                 lines: logLines, paused, page: logPage }, tr, (id, label, x, y, w, h, enabled, selected) => {
                 cv.roundRect(x, y, w, h, 12, selected ? '#6b3941' : '#27323f');
                 cv.text(tr(label), x + w / 2, y + 29, 21, enabled ? '#ffffff' : '#657483', { align: 'center', literal: true });
@@ -142,14 +151,17 @@ async function start(ctx, options) {
         cv.card(1460, 49, 91, 40, 20, [[0, automatic ? '#f24954' : '#676b70'], [1, automatic ? '#920f20' : '#25292f']]);
         cv.roundRect(automatic ? 1516 : 1466, 53, 32, 32, 16, '#f7f7f7');
         if (ready) cv.target(1160, 45, 400, 48, () => act(actions.BTN_AUTO), 'BTN_AUTO', 20);
+        button('BTN_IGNITION_M1', tr('Ignition M1') + ': ' + tr(auto.enabled() ? 'On' : 'Off'), 1200, 115, 350, 46,
+            ready && who === 'driver', auto.enabled());
         const controls = [ ['KHV', 470, 135], ['LNV', 994, 160], ['SNV', 255, 300], ['SHV', 440, 285], ['SLV', 995, 310] ];
         controls.forEach((row) => {
             const a = row[0], x = row[1], y = row[2];
             const supported = state && state.seats.axes[who].indexOf(a) >= 0;
             const enabled = ready && supported && !easy.actionReady(who, false);
             cv.text(tr(labels[a][2]), x + 61, y - 13, 21, '#d4dce5', { align: 'center', literal: true });
-            button(a + '_MINUS', labels[a][0], x, y, 54, 54, enabled, false, () => easy.jog(a, -1));
-            button(a + '_PLUS', labels[a][1], x + 68, y, 54, 54, enabled, false, () => easy.jog(a, 1));
+            const jog = (dir) => { auto.cancel('M1 cancelled: manual control'); return easy.jog(a, dir); };
+            button(a + '_MINUS', labels[a][0], x, y, 54, 54, enabled, false, () => jog(-1));
+            button(a + '_PLUS', labels[a][1], x + 68, y, 54, 54, enabled, false, () => jog(1));
         });
         const memory = ready && !easy.actionReady(who, true);
         cv.fillRect(28, 445, 1544, 1, [230, 235, 242, 65]);
@@ -205,12 +217,12 @@ async function start(ctx, options) {
     async function close() {
         closed = true; if (loop && loop.stop) loop.stop();
         comfortLog.flush();
-        await moves.stop().catch(() => {}); client.close();
+        await moves.stop().catch(() => {}); runtime.close();
     }
     if (ctx.app && ctx.app.on) ctx.app.on('shutdown', close);
     foreground();
     await render(true);
     await easy.refresh().catch(() => {});
-    return { easy, client, render, close, demo, comfortLog };
+    return { easy, client, render, close, demo, comfortLog, auto };
 }
 module.exports = { start };

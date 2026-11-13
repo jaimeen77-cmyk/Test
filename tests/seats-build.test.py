@@ -62,6 +62,7 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
     ko_strings = json.loads((preview / 'rhmiData/variantGroups/Common/texts/en_GB.json').read_text(encoding='utf-8'))
     assert ko_strings['SID_SEATS_EASY_ACCESS_TITLE'] == '시트 Easy Access'
     run(ROOT, 'node', str(ROOT / 'tests/seats-screen.test.js'), str(project / 'dist/seats_easy_access'))
+    run(ROOT, 'node', str(ROOT / 'apps/seats_easy_access/test/ignition-m1.test.js'))
     # This executes the same mgu.run/hu-stub path as emu.js, not a handcrafted mock UI.
     frames = project / 'preview/seats'
     run(project, 'node', 'kit/tools/preview.js', str(project / 'dist/seats_easy_access'), str(frames),
@@ -83,6 +84,9 @@ with tempfile.TemporaryDirectory(prefix='seats-standard-build-') as temp:
         meta = json.load(archive.extractfile('meta.json'))
         pkg = json.load(archive.extractfile('source/package.json'))
         assert meta['version'] == pkg['version']
+        assert pkg['mguAppStartType'] == 'autostart'
+        assert 'source/javascript/runtime.js' in archive.getnames()
+        assert 'source/javascript/ignition-m1.js' in archive.getnames()
         assert 'source/node_modules/oap-sdk/index.js' in archive.getnames()
         assert 'rhmiData/resources/seat-control.png' in archive.getnames()
         assert 'oapgen/gen.js' in archive.getnames()

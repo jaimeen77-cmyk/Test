@@ -4,7 +4,7 @@
 const EventEmitter = require('events');
 const net = require('net');
 const SOCKET = '/run/iteriodev-comfort/ctl.sock';
-const VERSION = '0.6.4';
+const VERSION = '0.6.5';
 
 function bounded(promise, ms, message) {
     return new Promise((resolve, reject) => {
@@ -34,6 +34,8 @@ function stateOf(message) {
             jobSeat: seats.jobSeat === 'driver' || seats.jobSeat === 'passenger' ? seats.jobSeat : null,
             wheel: seats.wheel === true,
             roomOut: seats.roomOut === true,
+            memory1: { driver: !!(seats.memories && seats.memories.driver && seats.memories.driver[0]),
+                passenger: !!(seats.memories && seats.memories.passenger && seats.memories.passenger[0]) },
         },
     };
     ['driver', 'passenger'].forEach((who) => {

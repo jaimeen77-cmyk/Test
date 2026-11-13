@@ -13,6 +13,7 @@ class DemoClient extends EventEmitter {
                 passenger: { SLV: 100, SHV: 100, LNV: 100, SNV: 100, KHV: 100 } },
             moving: null, job: null, exit: { driver: true, passenger: true },
             pre: { driver: false, passenger: false }, roomOut: false,
+            memories: { driver: [{ SLV: 100 }], passenger: [{ SLV: 100 }] },
         } } });
     }
     async refresh() { this.at = Date.now(); this.emit('state', this.state); return this.state; }

@@ -14,7 +14,9 @@ const originalConnection = net.createConnection;
 let connections = 0;
 net.createConnection = () => { connections++; throw new Error('Preview must never open a vehicle socket'); };
 (async () => {
+    const values = {};
     const ctx = {
+        settings: { get(k) { return values[k]; }, set(k, v) { values[k] = v; } },
         app: new EventEmitter(), theme: () => themes.theme('dark'), log: { error(e) { throw e; } },
         canvas: (w, h) => {
             const cv = new record.Recorder(w, h), text = cv.text;
@@ -50,6 +52,11 @@ net.createConnection = () => { connections++; throw new Error('Preview must neve
         await handlers.BTN_ROOM(); assert.equal(screen.client.state.seats.roomOut, true);
         await handlers.BTN_ROOM(); assert.equal(screen.client.state.seats.roomOut, false);
         await handlers.BTN_AUTO(); assert.equal(screen.client.state.settings.easyExit, true);
+        await tab(0);
+        await handlers.BTN_IGNITION_M1(); assert.equal(screen.auto.enabled(), true);
+        assert.equal(screen.auto.pending, null, 'enabling does not move a seat');
+        await handlers.BTN_IGNITION_M1(); assert.equal(screen.auto.enabled(), false);
+        await tab(1);
         await handlers.BTN_MINUS(); assert.equal(screen.client.state.seats.pos.passenger.SLV, 99);
         await handlers.BTN_SAVE(); assert.equal(screen.easy.saveMemory, true);
         await handlers.BTN_M1(); assert.equal(screen.easy.saveMemory, false);

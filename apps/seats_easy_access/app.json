@@ -1,6 +1,12 @@
 {
   "id": "seats_easy_access",
-  "version": "0.6.4",
+  "version": "0.6.5",
+  "mguAppStartType": "autostart",
+  "startType": "autostart",
+  "settings": [
+    { "key": "ignitionM1", "label": "Ignition M1", "type": "bool", "default": false },
+    { "key": "m1OffSeen", "label": "Observed power off", "type": "bool", "default": false }
+  ],
   "title": "Seats Easy Access",
   "description": "Seat controls, memories, Easy Access and passenger Make room",
   "vendor": "custom",
@@ -24,6 +30,8 @@
       "title": "Seats Easy Access",
       "graphic": "MAIN_GFX",
       "buttons": [
+        ["BTN_IGNITION_M1", "Ignition M1"],
+        ["BTN_LOG_SOURCE", "Log source"],
         [
           "BTN_DRIVER",
           "Driver"
@@ -173,7 +181,30 @@
       "Refresh logs": "로그 새로 확인",
       "Paused": "화면 일시정지",
       "Live": "실시간",
-      "Status read failed": "상태 조회 실패"
+      "Status read failed": "상태 조회 실패",
+      "Ignition M1": "시동 시 M1 복귀",
+      "Observed power off": "전원 꺼짐 감지 기록",
+      "App status and M1 events": "앱 상태 및 M1 작동 기록",
+      "Log source": "로그 종류 전환",
+      "M1 cancelled: Comfort disconnected": "M1 취소: Comfort 연결 끊김",
+      "M1 cancelled: option off": "M1 취소: 옵션 꺼짐",
+      "M1 cancelled: power off": "M1 취소: 차량 꺼짐",
+      "M1 power-on detected: waiting 5 seconds": "M1 차량 켜짐 감지: 5초 대기",
+      "M1 cancelled: car not stationary": "M1 취소: 정차 상태 아님",
+      "M1 cancelled: readiness timeout": "M1 취소: 준비 대기 30초 초과",
+      "M1 cancelled: power or stationary condition changed": "M1 취소: 전원 또는 정차 조건 변경",
+      "M1 waiting for Comfort seat job to finish": "M1 Comfort 시트 작업 종료 대기",
+      "M1 cancelled: save driver M1 first": "M1 취소: 운전석 M1을 먼저 저장하세요",
+      "M1 cancelled: driver position unavailable": "M1 취소: 운전석 위치 정보 없음",
+      "M1 calling driver memory": "M1 운전석 메모리 호출",
+      "M1 command sent (arrival not confirmed)": "M1 호출 명령 전송됨 (도착 미확인)",
+      "M1 cancelled: status unavailable": "M1 취소: 상태 조회 실패",
+      "M1 request failed": "M1 요청 실패",
+      "M1 cancelled: app shutdown": "M1 취소: 앱 종료",
+      "M1 cancelled: option changed": "M1 취소: 옵션 변경",
+      "Ignition M1 enabled: next power cycle": "시동 시 M1 복귀 켜짐: 다음 시동부터 적용",
+      "Ignition M1 disabled": "시동 시 M1 복귀 꺼짐",
+      "M1 cancelled: manual control": "M1 취소: 수동 조작"
     }
   }
 }

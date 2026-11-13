@@ -3,7 +3,7 @@
   "components": [
     {
       "id": "seats_easy_access",
-      "version": "0.6.4",
+      "version": "0.6.5",
       "kind": "app",
       "title": "Seats Easy Access (English)",
       "description": "Seat controls, memories, Easy Access and passenger Make room",
@@ -40,7 +40,7 @@
     },
     {
       "id": "seats_easy_access_ko",
-      "version": "0.6.4",
+      "version": "0.6.5",
       "kind": "app",
       "title": "시트 Easy Access (한국어)",
       "description": "시트 조절·메모리·승하차 편의·조수석 공간 확보",
