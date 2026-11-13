@@ -25,11 +25,17 @@
 
 ## MGU Store 설치
 
+**간편 설치 (Releases):** Store → Settings → Add source에서 `jaimeen77-cmyk/Test`를 입력하고 **Releases**를 선택하세요. **Seats Easy Access 0.3.0**을 선택해 설치합니다. `IterioDev/car-apps` 소스도 추가해야 Comfort 의존성을 설치할 수 있습니다. 이 방법은 완성된 OAP 패키지를 내려받으므로 차량에서 Python 빌드를 실행하지 않습니다.
+
+**소스 빌드 (main):** 아래 방법을 사용합니다.
+
 Store의 **Settings → Add source**에서 `jaimeen77-cmyk/test`의 `main` 브랜치를 추가하거나 다음 카탈로그 주소를 사용합니다.
 
 ```text
 https://raw.githubusercontent.com/jaimeen77-cmyk/test/main/catalog.json
 ```
+
+Releases 카탈로그 직접 주소: `https://github.com/jaimeen77-cmyk/Test/releases/download/catalog/catalog.json`
 
 필수 구성:
 

@@ -2,5 +2,6 @@
 *.pyc
 g20-seat-test/dist/
 seats-easy-access/dist/
+store-release/
 seat-test.log*
 seat-test-report.json
